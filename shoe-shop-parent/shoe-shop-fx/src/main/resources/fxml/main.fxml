@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="mainPane" prefHeight="600" prefWidth="800" styleClass="main-panel" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rcs.shoe.shop.fx.controller.ui.MainController">
+   <children>
+      <Label fx:id="loggedInUserLabel" layoutX="10.0" layoutY="580" text="%label.loggedinUser" />
+      <Label fx:id="loggedinUserValue" layoutX="90" layoutY="580" text="loggedinUserValue">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <StackPane fx:id="mainStackPane" layoutY="55.0" prefHeight="525.0" prefWidth="800.0" />
+      <MenuBar layoutY="0" prefHeight="25.0" prefWidth="820">
+        <menus>
+          <Menu mnemonicParsing="false" text="%menu.products">
+            <items>
+              <MenuItem mnemonicParsing="false" text="%menu.products.add" onAction="#noImpl"/>
+              <MenuItem mnemonicParsing="false" text="%menu.products.list" onAction="#listProducts"/>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%menu.sales">
+            <items>
+              <MenuItem mnemonicParsing="false" text="%menu.sales.add" onAction="#noImpl"/>
+                  <MenuItem mnemonicParsing="false" text="%menu.sales.list" onAction="#noImpl"/>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%menu.account">
+            <items>
+              <MenuItem mnemonicParsing="false" text="%menu.account.logout" onAction="#logOut"/>
+                  <MenuItem mnemonicParsing="false" text="%menu.account.add" onAction="#noImpl"/>
+                  <MenuItem mnemonicParsing="false" text="%menu.account.list" onAction="#noImpl"/>
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</Pane>

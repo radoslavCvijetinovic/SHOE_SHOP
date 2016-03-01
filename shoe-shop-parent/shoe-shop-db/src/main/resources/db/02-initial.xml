@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="inc-001" author="rc">
+        <createTable tableName="authorities">
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>            
+            <column name="authority" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="username"
+                                 baseTableName="authorities"
+                                 constraintName="fk_user_authorities"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+        <addUniqueConstraint catalogName="cat"
+                                     columnNames="username,authority"
+                                     constraintName="uk_username_authority"
+                                     tableName="authorities"
+                                     tablespace="A String"/>
+    </changeSet>
+</databaseChangeLog>
