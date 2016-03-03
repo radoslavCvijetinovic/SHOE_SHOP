@@ -38,7 +38,7 @@ public class ITUserRepository {
     
     @Test
     public void testFindByUserNameAndPassword(){
-        User user = userRepository.findByUserNameAndPassword("leo@test.com", "654321");
+        User user = userRepository.findByUserNameAndPassword("leo.messi@test.com", "654321");
         
         assertThat(user).isNotNull();
     }

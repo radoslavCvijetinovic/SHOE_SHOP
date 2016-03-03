@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <users id="1"
-            firstName="Luis"
-            lastName="Suarez"
-            userName="luis.s@test.com"
-            password="123456"/>
+            userName="luis.suarez@test.com"
+            password="123456"
+            enabled="true"/>
     <users id="2"
-            firstName="Leo"
-            lastName="Messi"
-            userName="leo@test.com"
-            password="654321"/>
+            userName="leo.messi@test.com"
+            password="654321"
+            enabled="true"/>
 </dataset>
