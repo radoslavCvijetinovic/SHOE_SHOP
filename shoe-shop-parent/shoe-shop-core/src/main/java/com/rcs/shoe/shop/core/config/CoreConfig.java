@@ -10,11 +10,13 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -78,8 +80,19 @@ public class CoreConfig {
         return new HikariDataSource(dataSourceConfig);
     }
 
+   @Bean(name = "liquibase")
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+
+        liquibase.setDataSource(dataSource());
+        liquibase.setChangeLog("classpath:db/db-changelog.xml");
+
+        return liquibase;
+    }
+
     @Bean
     @Autowired
+    @DependsOn("liquibase")
     LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
@@ -99,7 +112,6 @@ public class CoreConfig {
         //Configures the naming strategy that is used when Hibernate creates
         //new database objects and schema elements
         //jpaProperties.put("hibernate.ejb.naming_strategy", hibernateEjbNamingStrategy);
-
         //If the value of this property is true, Hibernate writes all SQL
         //statements to the console.
         jpaProperties.put("hibernate.show_sql", hibernateShowSql);

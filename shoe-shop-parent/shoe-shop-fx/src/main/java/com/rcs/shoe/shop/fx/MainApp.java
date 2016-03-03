@@ -1,8 +1,5 @@
 package com.rcs.shoe.shop.fx;
 
-import com.rcs.shoe.shop.common.exceptions.ShoeShopException;
-import com.rcs.shoe.shop.db.LiquibaseExecutor;
-import com.rcs.shoe.shop.db.config.ShoeShopDBConfig;
 import com.rcs.shoe.shop.fx.config.AppConfig;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
@@ -27,20 +24,8 @@ public class MainApp extends Application {
 
         Platform.setImplicitExit(true);
 
-        initializeDatabase();
-
         startApp(stage);
 
-    }
-
-    private void initializeDatabase() throws ShoeShopException {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(ShoeShopDBConfig.class);
-        context.refresh();
-
-        LiquibaseExecutor liquibaseExecutor = context.getBean(LiquibaseExecutor.class);
-        liquibaseExecutor.update();
-        context.close();
     }
 
     private void startApp(Stage stage) {

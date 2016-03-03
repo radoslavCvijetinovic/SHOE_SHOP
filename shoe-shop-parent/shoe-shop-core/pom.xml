@@ -34,6 +34,18 @@
             <version>${HikariCP.version}</version>
         </dependency>
         
+        <dependency>                                          
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>              
+            <version>${liquibase-core.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>                   
+        </dependency>
+        
         <!-- JPA Provider (Hibernate) -->
         <dependency>
             <groupId>org.hibernate</groupId>

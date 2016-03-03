@@ -10,7 +10,6 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.rcs.shoe.shop.core.config.CoreConfig;
 import com.rcs.shoe.shop.core.entity.User;
-import com.rcs.shoe.shop.core.service.UserService;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;

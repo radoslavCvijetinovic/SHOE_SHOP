@@ -26,7 +26,6 @@
     
     <modules>
         <module>shoe-shop-common</module>
-        <module>shoe-shop-db</module>
         <module>shoe-shop-core</module>
         <module>shoe-shop-fx</module>
     </modules>

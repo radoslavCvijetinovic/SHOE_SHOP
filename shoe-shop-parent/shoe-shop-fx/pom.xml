@@ -67,12 +67,6 @@
         
         <dependency>
             <groupId>com.rcs</groupId>
-            <artifactId>shoe-shop-db</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.rcs</groupId>
             <artifactId>shoe-shop-common</artifactId>
             <version>${project.version}</version>
         </dependency>
