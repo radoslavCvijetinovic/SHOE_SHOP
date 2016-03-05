@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="inc-001" author="rc">
+        <createTable tableName="products">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>            
+            <column name="product_num" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_desc" type="varchar(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modification_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by_user" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by_user" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="cat"
+                          columnDataType="long"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="100"
+                          tableName="products"/>
+        <addUniqueConstraint catalogName="cat"
+                             columnNames="product_code"
+                             constraintName="uk_product_code"
+                             tableName="products"
+                             tablespace="A String"/>
+        <addForeignKeyConstraint baseColumnNames="created_by_user"
+                                 baseTableName="products"
+                                 constraintName="fk_products_created_by_user"
+                                 onDelete="NO ACTION"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="modified_by_user"
+                                 baseTableName="products"
+                                 constraintName="fk_products_modified_by_user"
+                                 onDelete="NO ACTION"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+        <createTable tableName="product_quantities">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="long">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="initial_quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modification_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by_user" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by_user" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="cat"
+                          columnDataType="long"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="100"
+                          tableName="product_quantities"/>
+        <addUniqueConstraint catalogName="cat"
+                             columnNames="product_id, size"
+                             constraintName="uk_product_size"
+                             tableName="product_quantities"
+                             tablespace="A String"/>
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_quantities"
+                                 constraintName="fk_products_product_quantities"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="products"/>            
+        <addForeignKeyConstraint baseColumnNames="created_by_user"
+                                 baseTableName="product_quantities"
+                                 constraintName="fk_product_quantities_created_by_user"
+                                 onDelete="NO ACTION"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="modified_by_user"
+                                 baseTableName="product_quantities"
+                                 constraintName="fk_product_quantities_modified_by_user"
+                                 onDelete="NO ACTION"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>

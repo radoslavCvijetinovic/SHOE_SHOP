@@ -1,5 +1,6 @@
 package com.rcs.shoe.shop.fx.config;
 
+import com.rcs.shoe.shop.fx.Constants;
 import com.rcs.shoe.shop.fx.controller.ui.Controller;
 import com.rcs.shoe.shop.fx.controller.ui.LoginController;
 import com.rcs.shoe.shop.fx.controller.ui.MainController;
@@ -36,10 +37,6 @@ public class ScreensConfig implements Observer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScreensConfig.class);
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
-    public static final String STYLE_FILE = "/styles/styles.css";
-
     private Stage stage;
     private Scene scene;
     private LanguageModel lang;
@@ -64,16 +61,16 @@ public class ScreensConfig implements Observer {
 
     public void showMainScreen() {
         root = new StackPane();
-        root.getStylesheets().add(STYLE_FILE);
-        stage.setTitle("Shoe Shop");
-        stage.getIcons().add(new Image(getClass().getResource("/images/shoe-shop-fx.png").toExternalForm()));
-        scene = new Scene(root, WIDTH, HEIGHT);
+        root.getStylesheets().add(Constants.STYLE_FILE_PATH);
+        stage.setTitle(Constants.APP_TITLE);
+        stage.getIcons().add(new Image(getClass().getResource(Constants.ICON_FILE_PATH).toExternalForm()));
+        scene = new Scene(root, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         stage.setScene(scene);
         stage.setResizable(false);
 
         stage.setOnHiding(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent event) {
-                LOGGER.debug("Closing app.");
+                LOGGER.debug("Closing the app!");
                 System.exit(0);
                 // TODO are you sure you want to exit dialog
             }
@@ -104,30 +101,30 @@ public class ScreensConfig implements Observer {
 
     public void loadLogin() {
         try {
-            setNode(getNode(loginController(), getClass().getResource("/fxml/login.fxml")));
+            setNode(getNode(loginController(), getClass().getResource(Constants.LOGIN_FXML)));
         } catch (Throwable e) {
-            LOGGER.error("loadLogin error.", e);
+            LOGGER.error("LoadLogin error: ", e);
         }
     }
 
     public void loadMain() {
         try {
             MainController mainController = mainController();
-            Node mainNode = getNode(mainController, getClass().getResource("/fxml/main.fxml"));
+            Node mainNode = getNode(mainController, getClass().getResource(Constants.MAIN_FXML));
             mainStackPane = mainController.getMainStackPane();
             setNode(mainNode);
             loadProducts();
         } catch (Throwable e) {
-            LOGGER.error("loadMain error.", e);
+            LOGGER.error("LoadMain error: ", e);
         }
     }
 
     public void loadProducts() {
-        setNodeToMain(getNode(productsController(), getClass().getResource("/fxml/products.fxml")));
+        setNodeToMain(getNode(productsController(), getClass().getResource(Constants.PRODUCTS_FXML)));
     }
     
     public void loadNotImplemented(){
-        setNodeToMain(getNode(notImplementedController(), getClass().getResource("/fxml/not_implemented.fxml")));
+        setNodeToMain(getNode(notImplementedController(), getClass().getResource(Constants.NOT_IMPL_FXML)));
     }
 
     private Node getNode(final Controller controller, URL location) {
@@ -141,7 +138,7 @@ public class ScreensConfig implements Observer {
         try {
             return (Node) loader.load();
         } catch (Exception e) {
-            LOGGER.error("getNode error.", e);
+            LOGGER.error("GetNode error: ", e);
             return null;
         }
     }

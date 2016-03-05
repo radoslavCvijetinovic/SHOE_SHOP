@@ -29,7 +29,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.1.4</version>
                 <configuration>
-                    <mainClass>com.rcs.shoe.shop.fx.MainApp</mainClass>
+                    <mainClass>com.rcs.shoe.shop.fx.Main</mainClass>
                     <!-- only required if signing the jar file -->
                     <keyStoreAlias>example-user</keyStoreAlias>
                     <keyStorePassword>example-password</keyStorePassword>
