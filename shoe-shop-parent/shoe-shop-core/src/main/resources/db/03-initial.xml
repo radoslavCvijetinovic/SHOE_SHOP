@@ -25,13 +25,13 @@
                 <constraints nullable="false"/>
             </column>
             <column name="modification_time" type="datetime">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="created_by_user" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="modified_by_user" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
         <addAutoIncrement catalogName="cat"
@@ -59,33 +59,27 @@
                                  onUpdate="CASCADE"
                                  referencedColumnNames="username"
                                  referencedTableName="users"/>
-        <createTable tableName="product_quantities">
+        <createTable tableName="product_sizes">
             <column name="id" type="long">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="product_id" type="long">
+            <column name="product_code" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="size" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="quantity" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="initial_quantity" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="creation_time" type="datetime">
                 <constraints nullable="false"/>
             </column>
             <column name="modification_time" type="datetime">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="created_by_user" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="modified_by_user" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
         <addAutoIncrement catalogName="cat"
@@ -93,32 +87,80 @@
                           columnName="id"
                           incrementBy="1"
                           startWith="100"
-                          tableName="product_quantities"/>
+                          tableName="product_sizes"/>
         <addUniqueConstraint catalogName="cat"
-                             columnNames="product_id, size"
+                             columnNames="product_code, size"
                              constraintName="uk_product_size"
-                             tableName="product_quantities"
+                             tableName="product_sizes"
                              tablespace="A String"/>
-        <addForeignKeyConstraint baseColumnNames="product_id"
-                                 baseTableName="product_quantities"
-                                 constraintName="fk_products_product_quantities"
+        <addForeignKeyConstraint baseColumnNames="product_code"
+                                 baseTableName="product_sizes"
+                                 constraintName="fk_products_product_sizes"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="product_code"
                                  referencedTableName="products"/>            
         <addForeignKeyConstraint baseColumnNames="created_by_user"
-                                 baseTableName="product_quantities"
-                                 constraintName="fk_product_quantities_created_by_user"
+                                 baseTableName="product_sizes"
+                                 constraintName="fk_product_sizes_created_by_user"
                                  onDelete="NO ACTION"
                                  onUpdate="CASCADE"
                                  referencedColumnNames="username"
                                  referencedTableName="users"/>
         <addForeignKeyConstraint baseColumnNames="modified_by_user"
-                                 baseTableName="product_quantities"
-                                 constraintName="fk_product_quantities_modified_by_user"
+                                 baseTableName="product_sizes"
+                                 constraintName="fk_product_sizes_modified_by_user"
                                  onDelete="NO ACTION"
                                  onUpdate="CASCADE"
                                  referencedColumnNames="username"
                                  referencedTableName="users"/>
+        <createTable tableName="product_quantity_history">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_code" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modification_time" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by_user" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by_user" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addAutoIncrement catalogName="cat"
+                          columnDataType="long"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="100"
+                          tableName="product_quantity_history"/>
+        <addForeignKeyConstraint baseColumnNames="product_code, size"
+                                 baseTableName="product_quantity_history"
+                                 constraintName="fk_product_sizes_product_quantity_history"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="product_code, size"
+                                 referencedTableName="product_sizes"/>
+        <createView catalogName="cat"
+                    replaceIfExists="true"
+                    schemaName="public"
+                    viewName="v_products">
+            select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity from products as pr left outer join product_quantity_history as pqh on pr.product_code = pqh.product_code group by pr.product_code
+        </createView>
     </changeSet>
 </databaseChangeLog>

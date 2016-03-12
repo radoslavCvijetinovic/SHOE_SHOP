@@ -44,16 +44,20 @@ public class MainController extends Controller implements Initializable {
 
     public void logOut() {
         userService.logOut();
-        
+
         uIConfig.loadLogin();
     }
-    
+
     public void noImpl() {
         uIConfig.loadNotImplemented();
     }
-    
+
     public void listProducts() {
         uIConfig.loadProducts();
+    }
+
+    public void newProduct() {
+        uIConfig.loadNewProduct();
     }
 
     public StackPane getMainStackPane() {

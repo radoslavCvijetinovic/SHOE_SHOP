@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="%menu.products">
             <items>
-              <MenuItem mnemonicParsing="false" text="%menu.products.add" onAction="#noImpl"/>
+              <MenuItem mnemonicParsing="false" text="%menu.products.add" onAction="#newProduct"/>
               <MenuItem mnemonicParsing="false" text="%menu.products.list" onAction="#listProducts"/>
             </items>
           </Menu>

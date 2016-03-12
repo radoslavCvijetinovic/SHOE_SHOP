@@ -30,6 +30,8 @@ public class AppPreloader extends Preloader {
 
         Image spinnerImage = new Image(getClass().getResource(Constants.SPINNER_FILE_PATH).toExternalForm());
         ImageView iv1 = new ImageView();
+        iv1.setFitHeight(50);
+        iv1.setFitWidth(50);
         iv1.setImage(spinnerImage);
         
         HBox box = new HBox();

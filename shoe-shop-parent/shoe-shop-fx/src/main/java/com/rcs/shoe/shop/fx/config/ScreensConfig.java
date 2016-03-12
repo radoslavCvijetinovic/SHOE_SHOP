@@ -4,6 +4,7 @@ import com.rcs.shoe.shop.fx.Constants;
 import com.rcs.shoe.shop.fx.controller.ui.Controller;
 import com.rcs.shoe.shop.fx.controller.ui.LoginController;
 import com.rcs.shoe.shop.fx.controller.ui.MainController;
+import com.rcs.shoe.shop.fx.controller.ui.NewProductController;
 import com.rcs.shoe.shop.fx.controller.ui.NotImplementedController;
 import com.rcs.shoe.shop.fx.controller.ui.ProductsController;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
@@ -87,10 +88,6 @@ public class ScreensConfig implements Observer {
         mainStackPane.getChildren().setAll(node);
     }
 
-    private void setNodeOnTop(Node node) {
-        root.getChildren().add(node);
-    }
-
     public void removeNode(Node node) {
         root.getChildren().remove(node);
     }
@@ -122,8 +119,12 @@ public class ScreensConfig implements Observer {
     public void loadProducts() {
         setNodeToMain(getNode(productsController(), getClass().getResource(Constants.PRODUCTS_FXML)));
     }
-    
-    public void loadNotImplemented(){
+
+    public void loadNewProduct() {
+        setNodeToMain(getNode(newProductController(), getClass().getResource(Constants.NEW_PRODUCT_FXML)));
+    }
+
+    public void loadNotImplemented() {
         setNodeToMain(getNode(notImplementedController(), getClass().getResource(Constants.NOT_IMPL_FXML)));
     }
 
@@ -154,17 +155,23 @@ public class ScreensConfig implements Observer {
     MainController mainController() {
         return new MainController(this);
     }
-    
+
     @Bean
     @Scope("prototype")
     ProductsController productsController() {
         return new ProductsController(this);
     }
-    
+
     @Bean
     @Scope("prototype")
     NotImplementedController notImplementedController() {
         return new NotImplementedController(this);
+    }
+
+    @Bean
+    @Scope("prototype")
+    Controller newProductController() {
+        return new NewProductController(this);
     }
 
     public Stage getStage() {
