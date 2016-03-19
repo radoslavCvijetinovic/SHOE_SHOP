@@ -5,13 +5,13 @@
  */
 package com.rcs.shoe.shop.core.repository;
 
-import com.rcs.shoe.shop.core.entity.impl.ProductQuantityHistory;
+import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Rajko
  */
-public interface ProductQuantityHistoryRepository extends CrudRepository<ProductQuantityHistory, Long>{
+public interface ProductHistoryRepository extends CrudRepository<ProductHistory, Long>{
     
 }

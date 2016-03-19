@@ -4,7 +4,60 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="inc-001" author="rc">
+    <changeSet id="0.0.0.1-inc" author="rc">
+        
+        <!-- USERS TABLE START -->
+        <createTable tableName="users">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint catalogName="cat"
+                             columnNames="username"
+                             constraintName="uk_username"
+                             tableName="users"
+                             tablespace="A String"/>
+        <addAutoIncrement catalogName="cat"
+                          columnDataType="long"
+                          columnName="id"
+                          incrementBy="1"
+                          startWith="100"
+                          tableName="users"/>
+        <!-- USERS TABLE END -->
+        
+        <!-- AUTHORITIES TABLE START -->
+        <createTable tableName="authorities">
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>            
+            <column name="authority" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="username"
+                                 baseTableName="authorities"
+                                 constraintName="fk_user_authorities"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+        <addUniqueConstraint catalogName="cat"
+                             columnNames="username,authority"
+                             constraintName="uk_username_authority"
+                             tableName="authorities"
+                             tablespace="A String"/>
+        <!-- AUTHORITIES TABLE END -->
+        
+        <!-- PRODUCTS TABLE START -->
         <createTable tableName="products">
             <column name="id" type="long">
                 <constraints primaryKey="true" nullable="false"/>
@@ -59,62 +112,10 @@
                                  onUpdate="CASCADE"
                                  referencedColumnNames="username"
                                  referencedTableName="users"/>
-        <createTable tableName="product_sizes">
-            <column name="id" type="long">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="product_code" type="varchar(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="size" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="creation_time" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="modification_time" type="datetime">
-                <constraints nullable="true"/>
-            </column>
-            <column name="created_by_user" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="modified_by_user" type="varchar(255)">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
-        <addAutoIncrement catalogName="cat"
-                          columnDataType="long"
-                          columnName="id"
-                          incrementBy="1"
-                          startWith="100"
-                          tableName="product_sizes"/>
-        <addUniqueConstraint catalogName="cat"
-                             columnNames="product_code, size"
-                             constraintName="uk_product_size"
-                             tableName="product_sizes"
-                             tablespace="A String"/>
-        <addForeignKeyConstraint baseColumnNames="product_code"
-                                 baseTableName="product_sizes"
-                                 constraintName="fk_products_product_sizes"
-                                 onDelete="CASCADE"
-                                 onUpdate="CASCADE"
-                                 referencedColumnNames="product_code"
-                                 referencedTableName="products"/>            
-        <addForeignKeyConstraint baseColumnNames="created_by_user"
-                                 baseTableName="product_sizes"
-                                 constraintName="fk_product_sizes_created_by_user"
-                                 onDelete="NO ACTION"
-                                 onUpdate="CASCADE"
-                                 referencedColumnNames="username"
-                                 referencedTableName="users"/>
-        <addForeignKeyConstraint baseColumnNames="modified_by_user"
-                                 baseTableName="product_sizes"
-                                 constraintName="fk_product_sizes_modified_by_user"
-                                 onDelete="NO ACTION"
-                                 onUpdate="CASCADE"
-                                 referencedColumnNames="username"
-                                 referencedTableName="users"/>
-        <createTable tableName="product_quantity_history">
+        <!-- PRODUCTS TABLE END -->
+        
+        <!-- PRODUCT HISTORY TABLE START -->
+        <createTable tableName="product_history">
             <column name="id" type="long">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -148,29 +149,37 @@
                           columnName="id"
                           incrementBy="1"
                           startWith="100"
-                          tableName="product_quantity_history"/>
-        <addForeignKeyConstraint baseColumnNames="product_code, size"
-                                 baseTableName="product_quantity_history"
-                                 constraintName="fk_product_sizes_product_quantity_history"
+                          tableName="product_history"/>
+        <addForeignKeyConstraint baseColumnNames="product_code"
+                                 baseTableName="product_history"
+                                 constraintName="fk_product_product_history"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"
-                                 referencedColumnNames="product_code, size"
-                                 referencedTableName="product_sizes"/>
+                                 referencedColumnNames="product_code"
+                                 referencedTableName="products"/>
+        <!-- PRODUCT HISTORY TABLE END -->
+        
+        <!-- PRODUCTS VIEW START -->
         <createView catalogName="cat"
                     replaceIfExists="true"
                     schemaName="public"
                     viewName="v_products">
             select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
-            from products as pr left outer join product_quantity_history as pqh on pr.product_code = pqh.product_code
+            from products as pr left outer join product_history as pqh on pr.product_code = pqh.product_code
             group by pr.product_code
         </createView>
+        <!-- PRODUCTS VIEW END -->
+        
+        <!-- PRODUCT_HISTORY VIEW START -->
         <createView catalogName="cat"
                     replaceIfExists="true"
                     schemaName="public"
-                    viewName="v_product_quantity_history">
+                    viewName="v_product_history">
             select cast(max(pqh.id) as long) as id, pqh.product_code, pqh.size, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
-            from product_quantity_history as pqh
+            from product_history as pqh
             group by product_code, size
         </createView>
+        <!-- PRODUCT_HISTORY VIEW END -->
+        
     </changeSet>
 </databaseChangeLog>

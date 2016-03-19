@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.rcs.shoe.shop.core.entity.impl.view;
 
 import javax.persistence.Column;
@@ -12,13 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author Rajko
- */
 @Entity
-@Table(name = "v_product_quantity_history")
-public class V_ProductQuantityHistory {
+@Table(name = "v_product_history")
+public class V_ProductHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

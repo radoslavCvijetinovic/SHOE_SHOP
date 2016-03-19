@@ -27,10 +27,7 @@ public class Product extends AbstractProduct {
     protected Long id;
 
     @Transient
-    private List<ProductSizes> productSizes;
-
-    @Transient
-    private List<ProductQuantityHistory> productQuantityHistory;
+    private List<ProductHistory> productHistory;
 
     public Long getId() {
         return id;
@@ -40,19 +37,11 @@ public class Product extends AbstractProduct {
         this.id = id;
     }
 
-    public List<ProductSizes> getProductSizes() {
-        return productSizes;
+    public List<ProductHistory> getProductHistory() {
+        return productHistory;
     }
 
-    public void setProductSizes(List<ProductSizes> productSizes) {
-        this.productSizes = productSizes;
-    }
-
-    public List<ProductQuantityHistory> getProductQuantityHistory() {
-        return productQuantityHistory;
-    }
-
-    public void setProductQuantityHistory(List<ProductQuantityHistory> productQuantityHistory) {
-        this.productQuantityHistory = productQuantityHistory;
+    public void setProductHistory(List<ProductHistory> productQuantityHistory) {
+        this.productHistory = productQuantityHistory;
     }
 }

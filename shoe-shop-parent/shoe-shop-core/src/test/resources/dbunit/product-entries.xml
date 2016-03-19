@@ -10,22 +10,6 @@
               created_by_user="luis.suarez@test.com"
               modified_by_user="luis.suarez@test.com"
     />
-    <product_sizes id="1"
-                   product_code="PC001"
-                   size="41"
-                   creation_time="2010-08-25"
-                   modification_time="2010-08-25"
-                   created_by_user="luis.suarez@test.com"
-                   modified_by_user="luis.suarez@test.com"
-    />
-    <product_sizes id="2"
-                   product_code="PC001"
-                   size="43"
-                   creation_time="2010-08-25"
-                   modification_time="2010-08-25"
-                   created_by_user="luis.suarez@test.com"
-                   modified_by_user="luis.suarez@test.com"
-    />
     <products id="2"
               product_code="PC002"
               product_num="002"
@@ -35,21 +19,5 @@
               modification_time="2010-08-25"
               created_by_user="leo.messi@test.com"
               modified_by_user="leo.messi@test.com"
-    />
-    <product_sizes id="3"
-                   product_code="PC002"
-                   size="44"
-                   creation_time="2010-08-25"
-                   modification_time="2010-08-25"
-                   created_by_user="leo.messi@test.com"
-                   modified_by_user="luis.suarez@test.com"
-    />
-    <product_sizes id="4"
-                   product_code="PC002"
-                   size="43"
-                   creation_time="2010-08-25"
-                   modification_time="2010-08-25"
-                   created_by_user="leo.messi@test.com"
-                   modified_by_user="luis.suarez@test.com"
     />
 </dataset>

@@ -6,12 +6,11 @@
 package com.rcs.shoe.shop.fx.controller.ui;
 
 import com.rcs.shoe.shop.core.entity.impl.Product;
-import com.rcs.shoe.shop.core.entity.impl.ProductQuantityHistory;
-import com.rcs.shoe.shop.core.entity.impl.view.V_ProductQuantityHistory;
+import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
+import com.rcs.shoe.shop.core.entity.impl.view.V_ProductHistory;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +20,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.Pane;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,10 +154,10 @@ public class SaleEnterController extends Controller implements Initializable {
         produstNumberText.setDisable(true);
     }
 
-    private void setQuantities(Map<Integer, V_ProductQuantityHistory> map) {
+    private void setQuantities(Map<Integer, V_ProductHistory> map) {
         for (Label label : quantityLabels.values()) {
             Button button = quantityButtons.get("button" + getSize(label));
-            V_ProductQuantityHistory quantity = map.get(getSize(label));
+            V_ProductHistory quantity = map.get(getSize(label));
             if (quantity != null && quantity.getQuantity() > 0) {
                 button.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -197,7 +194,7 @@ public class SaleEnterController extends Controller implements Initializable {
                 + "redni broj: " + storedProduct.getProductNum() + ",\n"
                 + "veličina: " + getSize(button);
         if (showConfirmPopup("Da li ste sigurni?", message)) {
-            ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
+            ProductHistory quantityHistory = new ProductHistory();
             quantityHistory.setProductCode(storedProduct.getProductCode());
             quantityHistory.setSize(getSize(button));
             quantityHistory.setType(3);
