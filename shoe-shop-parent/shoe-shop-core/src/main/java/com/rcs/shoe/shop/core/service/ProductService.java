@@ -1,14 +1,12 @@
 package com.rcs.shoe.shop.core.service;
 
 import com.rcs.shoe.shop.core.entity.impl.Product;
-import com.rcs.shoe.shop.core.entity.impl.ProductQuantityHistory;
-import com.rcs.shoe.shop.core.entity.impl.ProductSizes;
-import com.rcs.shoe.shop.core.entity.impl.view.V_ProductQuantityHistory;
+import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
+import com.rcs.shoe.shop.core.entity.impl.view.V_ProductHistory;
 import com.rcs.shoe.shop.core.entity.impl.view.V_Products;
-import com.rcs.shoe.shop.core.repository.ProductQuantityHistoryRepository;
-import com.rcs.shoe.shop.core.repository.ProductSizesRepository;
+import com.rcs.shoe.shop.core.repository.ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.ProductRepository;
-import com.rcs.shoe.shop.core.repository.view.V_ProductQuantityHistoryRepository;
+import com.rcs.shoe.shop.core.repository.view.V_ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.view.V_ProductsRepository;
 import java.util.HashMap;
 import java.util.List;
@@ -31,26 +29,19 @@ public class ProductService {
     private V_ProductsRepository v_ProductsRepository;
 
     @Autowired
-    private ProductSizesRepository productSizesRepository;
+    private ProductHistoryRepository productHistoryRepository;
 
     @Autowired
-    private ProductQuantityHistoryRepository quantityRepository;
-
-    @Autowired
-    private V_ProductQuantityHistoryRepository vQuantityRepository;
+    private V_ProductHistoryRepository v_ProductHistoryRepository;
 
     @Transactional
     public Product saveOrUpdateProduct(Product product) {
-        List<ProductSizes> sizes = product.getProductSizes();
-        List<ProductQuantityHistory> quantities = product.getProductQuantityHistory();
+        List<ProductHistory> quantities = product.getProductHistory();
 
         Product productStored = productRepository.save(product);
 
-        List<ProductSizes> sizesStored = (List<ProductSizes>) productSizesRepository.save(sizes);
-        productStored.setProductSizes(sizesStored);
-
-        List<ProductQuantityHistory> quantitiesStored = (List<ProductQuantityHistory>) quantityRepository.save(quantities);
-        productStored.setProductQuantityHistory(quantitiesStored);
+        List<ProductHistory> quantitiesStored = (List<ProductHistory>) productHistoryRepository.save(quantities);
+        productStored.setProductHistory(quantitiesStored);
 
         return productStored;
     }
@@ -64,31 +55,22 @@ public class ProductService {
         return productRepository.findByProductCode(prodCode);
     }
 
-    public List<V_ProductQuantityHistory> getProductQuantities(String productCode) {
-        List<V_ProductQuantityHistory> result = vQuantityRepository.findByProductCode(productCode);
+    public List<V_ProductHistory> getProductQuantities(String productCode) {
+        List<V_ProductHistory> result = v_ProductHistoryRepository.findByProductCode(productCode);
         return result;
     }
 
-    public Map<Integer, V_ProductQuantityHistory> getProductQuantitiesMap(String productCode) {
-        List<V_ProductQuantityHistory> list = vQuantityRepository.findByProductCode(productCode);
-        Map<Integer, V_ProductQuantityHistory> result = new HashMap();
-        for (V_ProductQuantityHistory ps : list) {
+    public Map<Integer, V_ProductHistory> getProductQuantitiesMap(String productCode) {
+        List<V_ProductHistory> list = v_ProductHistoryRepository.findByProductCode(productCode);
+        Map<Integer, V_ProductHistory> result = new HashMap();
+        for (V_ProductHistory ps : list) {
             result.put(ps.getSize(), ps);
         }
         return result;
     }
 
-    public Map<Integer, ProductSizes> getProductSizesByProdCode(String productCode) {
-        List<ProductSizes> productSizeses = productSizesRepository.findByProductCode(productCode);
-        Map<Integer, ProductSizes> result = new HashMap();
-        for (ProductSizes ps : productSizeses) {
-            result.put(ps.getSize(), ps);
-        }
-        return result;
-    }
-
-    public ProductQuantityHistory saveProductQuantityHistory(ProductQuantityHistory quantityHistory) {
-        return quantityRepository.save(quantityHistory);
+    public ProductHistory saveProductQuantityHistory(ProductHistory quantityHistory) {
+        return productHistoryRepository.save(quantityHistory);
     }
 
     public Product findByProductCodeAndProductNum(String productCode, String productNumber) {

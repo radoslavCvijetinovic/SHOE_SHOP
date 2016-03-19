@@ -5,7 +5,6 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.rcs.shoe.shop.core.config.CoreConfig;
 import com.rcs.shoe.shop.core.entity.impl.Product;
-import com.rcs.shoe.shop.core.entity.impl.ProductSizes;
 import java.util.List;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -30,25 +29,11 @@ public class ITProductRepository {
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ProductSizesRepository productQuantitiesRepository;
-
     @Test
     public void testFindAll() {
         List<Product> products = (List<Product>) productRepository.findAll();
         assertEquals(2, products.size());
         assertEquals("leo.messi@test.com", products.get(1).getCreatedBy());
-    }
-
-    @Test
-    public void testFindQuantitiesForProduct() {
-        List<Product> products = (List<Product>) productRepository.findAll();
-        Product product = productRepository.findByProductCode(products.get(1).getProductCode());
-
-        List<ProductSizes> quantities
-                = (List<ProductSizes>) productQuantitiesRepository.findByProductCode(product.getProductCode());
-
-        assertEquals(2, quantities.size());
     }
 
     @Test
@@ -66,22 +51,5 @@ public class ITProductRepository {
 
         Assert.assertNotNull(product.getId());
 
-        ProductSizes pq = new ProductSizes();
-        pq.setCreatedBy("leo.messi@test.com");
-        pq.setProductCode("V123456");
-        pq.setSize(41);
-
-        ProductSizes pq1 = new ProductSizes();
-        pq1.setCreatedBy("leo.messi@test.com");
-        pq1.setProductCode("V123456");
-        pq1.setSize(45);
-
-        productQuantitiesRepository.save(pq);
-        productQuantitiesRepository.save(pq1);
-
-        List<ProductSizes> sizes
-                = (List<ProductSizes>) productQuantitiesRepository.findByProductCode(pq.getProductCode());
-
-        assertEquals(2, sizes.size());
     }
 }

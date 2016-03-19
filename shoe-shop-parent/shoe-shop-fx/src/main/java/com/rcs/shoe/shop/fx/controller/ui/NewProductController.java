@@ -6,14 +6,12 @@
 package com.rcs.shoe.shop.fx.controller.ui;
 
 import com.rcs.shoe.shop.core.entity.impl.Product;
-import com.rcs.shoe.shop.core.entity.impl.ProductQuantityHistory;
-import com.rcs.shoe.shop.core.entity.impl.ProductSizes;
-import com.rcs.shoe.shop.core.entity.impl.view.V_ProductQuantityHistory;
+import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
+import com.rcs.shoe.shop.core.entity.impl.view.V_ProductHistory;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,8 +208,8 @@ public class NewProductController extends Controller implements Initializable {
         searchProductButton.setVisible(false);
     }
 
-    private void setQuantities(List<V_ProductQuantityHistory> quantities) {
-        for (V_ProductQuantityHistory quantity : quantities) {
+    private void setQuantities(List<V_ProductHistory> quantities) {
+        for (V_ProductHistory quantity : quantities) {
             TextField tx = quantityFields.get("text" + quantity.getSize());
             tx.textProperty().setValue(quantity.getQuantity().toString());
             Label label = quantityLabels.get("label" + quantity.getSize());
@@ -279,9 +277,8 @@ public class NewProductController extends Controller implements Initializable {
         if (!produstNumber.getText().equals(storedProduct.getProductNum().toString())) {
             storedProduct.setProductNum(new Integer(produstNumber.getText()));
         }
-        storedProduct.setProductSizes(getProductSizes());
 
-        storedProduct.setProductQuantityHistory(getProductQuantity());
+        storedProduct.setProductHistory(getProductQuantity());
         productService.saveOrUpdateProduct(storedProduct);
     }
 
@@ -290,51 +287,28 @@ public class NewProductController extends Controller implements Initializable {
         product.setActive(Boolean.TRUE);
         product.setProductCode(productCode.getText());
         product.setProductNum(new Integer(produstNumber.getText()));
-
-        product.setProductSizes(getProductSizes());
-
-        product.setProductQuantityHistory(getProductQuantity());
+        
+        product.setProductHistory(getProductQuantity());
 
         productService.saveOrUpdateProduct(product);
     }
 
-    private List<ProductSizes> getProductSizes() {
-        List<ProductSizes> result = new ArrayList<>();
-        Map<Integer, ProductSizes> storedSizes = new HashMap<>();
-        if (storedProduct != null) {
-            storedSizes
-                    = productService.getProductSizesByProdCode(storedProduct.getProductCode());
-        }
-        for (TextField tx : quantityFields.values()) {
-            Integer s = getSize(tx);
-            if (storedSizes.get(s) == null) {
-                ProductSizes size = new ProductSizes();
-                size.setProductCode(productCode.getText());
-                size.setSize(s);
-                result.add(size);
-            } else {
-                result.add(storedSizes.get(s));
-            }
-        }
-        return result;
-    }
-
-    private List<ProductQuantityHistory> getProductQuantity() {
-        List<ProductQuantityHistory> result = new ArrayList<>();
+    private List<ProductHistory> getProductQuantity() {
+        List<ProductHistory> result = new ArrayList<>();
         for (TextField tx : quantityFields.values()) {
             Label label = quantityLabels.get(tx.getId().replaceFirst("text", "label"));
             Integer oldValue = new Integer(label.textProperty().getValue().trim());
             Integer newValue = new Integer(tx.textProperty().getValue().trim());
 
             if (oldValue > newValue) {
-                ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
+                ProductHistory quantityHistory = new ProductHistory();
                 quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(2);
                 quantityHistory.setQuantity(newValue - oldValue);
                 result.add(quantityHistory);
             } else if (oldValue < newValue) {
-                ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
+                ProductHistory quantityHistory = new ProductHistory();
                 quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(1);
