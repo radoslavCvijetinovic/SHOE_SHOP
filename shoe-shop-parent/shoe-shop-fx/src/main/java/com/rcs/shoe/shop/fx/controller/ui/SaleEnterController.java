@@ -198,8 +198,6 @@ public class SaleEnterController extends Controller implements Initializable {
                 + "veličina: " + getSize(button);
         if (showConfirmPopup("Da li ste sigurni?", message)) {
             ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
-            quantityHistory.setCreatedBy("rajkofon");
-            quantityHistory.setCreationTime(new Date());
             quantityHistory.setProductCode(storedProduct.getProductCode());
             quantityHistory.setSize(getSize(button));
             quantityHistory.setType(3);

@@ -1,8 +1,15 @@
 package com.rcs.shoe.shop.core.entity;
 
+import org.springframework.security.core.userdetails.User;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @MappedSuperclass
 public abstract class AbstractAudit {
@@ -51,4 +58,34 @@ public abstract class AbstractAudit {
         this.modifiedBy = modifiedBy;
     }
 
+    @PrePersist
+    public void prePersist() {
+        ZonedDateTime now = ZonedDateTime.now();
+        this.creationTime = Date.from(now.toInstant());
+        this.modificationTime = Date.from(now.toInstant());
+        String username = getUsernameOfAuthenticatedUser();
+        if(StringUtils.isNotBlank(username)) {
+            this.createdBy = username;
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        ZonedDateTime now = ZonedDateTime.now();
+        this.modificationTime = Date.from(now.toInstant());
+        String username = getUsernameOfAuthenticatedUser();
+        if(StringUtils.isNotBlank(username)) {
+            this.modifiedBy = username;
+        }
+    }
+
+    private String getUsernameOfAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        return ((User) authentication.getPrincipal()).getUsername();
+    }
 }

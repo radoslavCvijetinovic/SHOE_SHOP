@@ -1,7 +1,6 @@
 package com.rcs.shoe.shop.core.entity.impl;
 
 import com.rcs.shoe.shop.core.entity.AbstractAudit;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

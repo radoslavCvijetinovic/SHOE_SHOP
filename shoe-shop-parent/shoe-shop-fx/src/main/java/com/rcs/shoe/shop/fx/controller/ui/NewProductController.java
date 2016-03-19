@@ -147,7 +147,7 @@ public class NewProductController extends Controller implements Initializable {
         allZeroRB.selectedProperty().setValue(false);
 
         if (productCodeToEdit != null) {
-            if(fromSale) {
+            if (fromSale) {
                 uIConfig.loadNewSale(productCodeToEdit);
             } else {
                 uIConfig.loadProducts();
@@ -237,12 +237,22 @@ public class NewProductController extends Controller implements Initializable {
             if (showConfirmPopup("Potvrdi izmene.", "Da li ste sigurni da želite da sačuvate promene?")) {
                 if (storedProduct != null) {
                     updateExistingProduct();
+                    showProductUpdatedInfo();
                 } else {
                     saveNewProduct();
+                    showProductSavedInfo();
                 }
                 reset();
             }
         }
+    }
+
+    private void showProductSavedInfo() {
+        showInformationPopup("Proizvod sačuvan!", "Novi unos uspešno sačuvan.", "");
+    }
+
+    private void showProductUpdatedInfo() {
+        showInformationPopup("Proizvod sačuvan!", "Proizvod uspešno ažuriran.", "");
     }
 
     private boolean validate() {
@@ -279,8 +289,6 @@ public class NewProductController extends Controller implements Initializable {
         Product product = new Product();
         product.setActive(Boolean.TRUE);
         product.setProductCode(productCode.getText());
-        product.setCreatedBy("rajkofon");
-        product.setCreationTime(new Date());
         product.setProductNum(new Integer(produstNumber.getText()));
 
         product.setProductSizes(getProductSizes());
@@ -301,8 +309,6 @@ public class NewProductController extends Controller implements Initializable {
             Integer s = getSize(tx);
             if (storedSizes.get(s) == null) {
                 ProductSizes size = new ProductSizes();
-                size.setCreatedBy("rajkofon");
-                size.setCreationTime(new Date());
                 size.setProductCode(productCode.getText());
                 size.setSize(s);
                 result.add(size);
@@ -322,8 +328,6 @@ public class NewProductController extends Controller implements Initializable {
 
             if (oldValue > newValue) {
                 ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
-                quantityHistory.setCreatedBy("rajkofon");
-                quantityHistory.setCreationTime(new Date());
                 quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(2);
@@ -331,8 +335,6 @@ public class NewProductController extends Controller implements Initializable {
                 result.add(quantityHistory);
             } else if (oldValue < newValue) {
                 ProductQuantityHistory quantityHistory = new ProductQuantityHistory();
-                quantityHistory.setCreatedBy("rajkofon");
-                quantityHistory.setCreationTime(new Date());
                 quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(1);

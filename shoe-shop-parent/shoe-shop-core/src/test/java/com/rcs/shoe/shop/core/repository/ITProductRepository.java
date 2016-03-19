@@ -6,7 +6,6 @@ import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.rcs.shoe.shop.core.config.CoreConfig;
 import com.rcs.shoe.shop.core.entity.impl.Product;
 import com.rcs.shoe.shop.core.entity.impl.ProductSizes;
-import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -57,7 +56,6 @@ public class ITProductRepository {
         Product product = new Product();
         product.setActive(Boolean.TRUE);
         product.setCreatedBy("leo.messi@test.com");
-        product.setCreationTime(new Date());
         product.setModificationTime(null);
         product.setModifiedBy(null);
         product.setProductCode("V123456");
@@ -70,13 +68,11 @@ public class ITProductRepository {
 
         ProductSizes pq = new ProductSizes();
         pq.setCreatedBy("leo.messi@test.com");
-        pq.setCreationTime(new Date());
         pq.setProductCode("V123456");
         pq.setSize(41);
 
         ProductSizes pq1 = new ProductSizes();
         pq1.setCreatedBy("leo.messi@test.com");
-        pq1.setCreationTime(new Date());
         pq1.setProductCode("V123456");
         pq1.setSize(45);
 
