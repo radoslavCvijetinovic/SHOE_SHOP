@@ -59,21 +59,43 @@ public class LoginController extends Controller implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle rb) {
+        insertUsers();
+    }
 
-        if (!userService.userExists("rajkofon")) {
-            LOGGER.info("Admin not in database.");
+    public void insertUsers() {
+        insertAdminUser("srdjan.radanovic", "pwdsrpwd");
+        insertAdminUser("marijana.radanovic", "pwdmrpwd");
+        insertAdminUser("rajkofon2", "777777");
+        insertUser("korisnik1", "123456");
+    }
 
+    private void insertAdminUser(String username, String pwd) {
+        if (!userService.userExists(username)) {
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             authorities.add(new SimpleGrantedAuthority(AuthoritiesEnum.ADMIN.name()));
             authorities.add(new SimpleGrantedAuthority(AuthoritiesEnum.USER.name()));
 
-            UserDetails user = new User("rajkofon", "123456", authorities);
+            UserDetails user = new User(username, pwd, authorities);
 
             userService.save(user);
+            LOGGER.info("Inserted ADMIN user");
         } else {
-            LOGGER.debug("Admin FOUND in database.");
+            LOGGER.debug("ADMIN user in database.");
         }
+    }
 
+    private void insertUser(String username, String pwd) {
+        if (!userService.userExists(username)) {
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority(AuthoritiesEnum.USER.name()));
+
+            UserDetails user = new User(username, pwd, authorities);
+
+            userService.save(user);
+            LOGGER.info("Inserted USER");
+        } else {
+            LOGGER.debug("ADMIN user in database.");
+        }
     }
 
 }
