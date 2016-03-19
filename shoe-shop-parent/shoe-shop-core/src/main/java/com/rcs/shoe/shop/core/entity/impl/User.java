@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.rcs.shoe.shop.core.entity;
+package com.rcs.shoe.shop.core.entity.impl;
 
 import java.io.Serializable;
 import javax.persistence.Column;

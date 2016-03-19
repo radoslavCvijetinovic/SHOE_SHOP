@@ -6,81 +6,74 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="newProductPane" maxHeight="600.0" maxWidth="800.0" prefHeight="600" prefWidth="800" styleClass="main-panel" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rcs.shoe.shop.fx.controller.ui.NewProductController">
+<Pane fx:id="saleEnterPane" maxHeight="600.0" maxWidth="800.0" prefHeight="600" prefWidth="800" styleClass="main-panel" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rcs.shoe.shop.fx.controller.ui.SaleEnterController">
     <children>
-        <Label layoutX="20.0" layoutY="20.0" text="Promena stanja (ulaz izlaz)" />
+        <Label layoutX="20.0" layoutY="20.0" text="Prodaja" />
         <Label layoutX="20.0" layoutY="63.0" text="Sifra:" />
         <TextField fx:id="productCode" layoutX="110.0" layoutY="60.0" promptText="Šifra" />
-        <Button fx:id="searchProductButton" layoutX="280.0" layoutY="60.0" mnemonicParsing="false" onAction="#searchProduct" prefHeight="23.0" prefWidth="100.0" text="Proveri sifru" />
+        <Button fx:id="searchProductButton" layoutX="280.0" layoutY="60.0" mnemonicParsing="false" onAction="#searchProduct" prefHeight="23.0" prefWidth="100.0" text="Pretraga" />
         <Label fx:id="produstNumberLabel" layoutX="20.0" layoutY="93.0" text="Redni broj:" />
-        <TextField fx:id="produstNumber" layoutX="110.0" layoutY="90.0" promptText="Redni broj" />
+        <TextField fx:id="produstNumberText" layoutX="110.0" layoutY="93.0" promptText="Redni broj" />
         <Pane fx:id="sizesPane" layoutX="10.0" layoutY="300.0" prefHeight="160.0" prefWidth="780.0">
             <children>
                 <Label layoutX="10.0" layoutY="10.0" text="Velicina" />
                 <Label layoutX="70.0" layoutY="10.0" text="Trenutno stanje" />
-                <Label layoutX="170.0" layoutY="10.0" text="Novo stanje" />
+                <Label layoutX="170.0" layoutY="10.0" text="Prodaja" />
                 
                 <Label layoutX="260.0" layoutY="10.0" text="Velicina" />
                 <Label layoutX="320.0" layoutY="10.0" text="Trenutno stanje" />
-                <Label layoutX="420.0" layoutY="10.0" text="Novo stanje" />
+                <Label layoutX="420.0" layoutY="10.0" text="Prodaja" />
                 
                 <Label layoutX="510.0" layoutY="10.0" text="Velicina" />
                 <Label layoutX="570.0" layoutY="10.0" text="Trenutno stanje" />
-                <Label layoutX="670.0" layoutY="10.0" text="Novo stanje" />
+                <Label layoutX="670.0" layoutY="10.0" text="Prodaja" />
                 
                 <Label layoutX="20.0" layoutY="41.0" prefHeight="17.0" prefWidth="20.0" text="36" />
                 <Label fx:id="label36" layoutX="111.0" layoutY="41.0" text="0" />
-                <TextField fx:id="text36" layoutX="174.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button36" layoutX="174.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="36" />
                 
                 <Label layoutX="20.0" layoutY="70.0" prefHeight="17.0" prefWidth="20.0" text="37" />
                 <Label fx:id="label37" layoutX="111.0" layoutY="69.0" text="0" />
-                <TextField fx:id="text37" layoutX="174.0" layoutY="65.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button37" layoutX="174.0" layoutY="65.0" prefHeight="0.0" prefWidth="62.0" text="37" />
                 
                 <Label layoutX="20.0" layoutY="97.0" prefHeight="17.0" prefWidth="20.0" text="38" />
                 <Label fx:id="label38" layoutX="111.0" layoutY="97.0" text="0" />
-                <TextField fx:id="text38" layoutX="174.0" layoutY="93.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button38" layoutX="174.0" layoutY="93.0" prefHeight="0.0" prefWidth="62.0" text="38" />
                 
                 <Label layoutX="20.0" layoutY="125.0" prefHeight="17.0" prefWidth="20.0" text="39" />
                 <Label fx:id="label39" layoutX="111.0" layoutY="125.0" text="0" />
-                <TextField fx:id="text39" layoutX="174.0" layoutY="121.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button39" layoutX="174.0" layoutY="121.0" prefHeight="0.0" prefWidth="62.0" text="39" />
                 
                 <Label layoutX="275.0" layoutY="41.0" prefHeight="17.0" prefWidth="20.0" text="40" />
                 <Label fx:id="label40" layoutX="359.0" layoutY="41.0" text="0" />
-                <TextField fx:id="text40" layoutX="422.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button40" layoutX="422.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="40" />
                 
                 <Label layoutX="275.0" layoutY="71.0" prefHeight="17.0" prefWidth="20.0" text="41" />
                 <Label fx:id="label41" layoutX="359.0" layoutY="70.0" text="0" />
-                <TextField fx:id="text41" layoutX="422.0" layoutY="66.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button41" layoutX="422.0" layoutY="66.0" prefHeight="0.0" prefWidth="62.0" text="41" />
                 
                 <Label layoutX="274.0" layoutY="100.0" prefHeight="17.0" prefWidth="20.0" text="42" />
                 <Label fx:id="label42" layoutX="359.0" layoutY="99.0" text="0" />
-                <TextField fx:id="text42" layoutX="422.0" layoutY="95.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button42" layoutX="422.0" layoutY="95.0" prefHeight="0.0" prefWidth="62.0" text="42" />
                 
                 <Label layoutX="274.0" layoutY="128.0" prefHeight="17.0" prefWidth="20.0" text="43" />
                 <Label fx:id="label43" layoutX="359.0" layoutY="128.0" text="0" />
-                <TextField fx:id="text43" layoutX="422.0" layoutY="124.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button43" layoutX="422.0" layoutY="124.0" prefHeight="0.0" prefWidth="62.0" text="43" />
                 
                 <Label layoutX="522.0" layoutY="41.0" prefHeight="17.0" prefWidth="20.0" text="44" />
                 <Label fx:id="label44" layoutX="611.0" layoutY="41.0" text="0" />
-                <TextField fx:id="text44" layoutX="673.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button44" layoutX="673.0" layoutY="37.0" prefHeight="0.0" prefWidth="62.0" text="44" />
                 
                 <Label layoutX="522.0" layoutY="72.0" prefHeight="17.0" prefWidth="20.0" text="45" />
                 <Label fx:id="label45" layoutX="611.0" layoutY="70.0" text="0" />
-                <TextField fx:id="text45" layoutX="673.0" layoutY="67.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button45" layoutX="673.0" layoutY="67.0" prefHeight="0.0" prefWidth="62.0" text="45" />
                 
                 <Label layoutX="522.0" layoutY="99.0" prefHeight="17.0" prefWidth="20.0" text="46" />
                 <Label fx:id="label46" layoutX="611.0" layoutY="100.0" text="0" />
-                <TextField fx:id="text46" layoutX="673.0" layoutY="96.0" prefHeight="0.0" prefWidth="62.0" text="0" />
+                <Button fx:id="button46" layoutX="673.0" layoutY="96.0" prefHeight="0.0" prefWidth="62.0" text="46" />
                 
             </children>
         </Pane>
-        <Button fx:id="saveProdButton" layoutX="20.0" layoutY="476.0" mnemonicParsing="false" onAction="#saveProduct" prefHeight="23.0" prefWidth="100.0" text="Sačuvaj" />
-        <Button fx:id="resetProdFormButton" layoutX="134.0" layoutY="476.0" mnemonicParsing="false" onAction="#resetProductForm" prefHeight="23.0" prefWidth="100.0" text="Odustani" />
-        <Pane fx:id="shortcutsPane" layoutX="10.0" layoutY="130.0" prefHeight="170.0" prefWidth="780.0">
-            <children>
-                <Label layoutX="14.0" layoutY="14.0" text="Prečice" />
-                <RadioButton fx:id="allZeroRB" layoutX="14.0" layoutY="38.0" mnemonicParsing="false" onAction="#shortcutsChange" text="sve na 0" />
-            </children>
-        </Pane>
-    </children>
+        <Button fx:id="resetSaleButton" layoutX="20.0" layoutY="476.0" mnemonicParsing="false" onAction="#resetForm" prefHeight="23.0" prefWidth="100.0" text="Resetuj" />
+        <Button fx:id="quitSaleButton" layoutX="134.0" layoutY="476.0" mnemonicParsing="false" onAction="#quitForm" prefHeight="23.0" prefWidth="100.0" text="Odustani" /> </children>
 </Pane>

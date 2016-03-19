@@ -5,7 +5,7 @@
  */
 package com.rcs.shoe.shop.core.repository;
 
-import com.rcs.shoe.shop.core.entity.User;
+import com.rcs.shoe.shop.core.entity.impl.User;
 import org.springframework.data.repository.CrudRepository;
 
 /**

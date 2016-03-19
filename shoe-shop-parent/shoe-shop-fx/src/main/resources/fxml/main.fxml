@@ -7,8 +7,8 @@
 
 <Pane fx:id="mainPane" prefHeight="600" prefWidth="800" styleClass="main-panel" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rcs.shoe.shop.fx.controller.ui.MainController">
    <children>
-      <Label fx:id="loggedInUserLabel" layoutX="10.0" layoutY="580" text="%label.loggedinUser" />
-      <Label fx:id="loggedinUserValue" layoutX="90" layoutY="580" text="loggedinUserValue">
+      <Label fx:id="loggedInUserLabel" layoutX="500.0" layoutY="580.0" text="%label.loggedinUser" />
+      <Label fx:id="loggedinUserValue" layoutX="625.0" layoutY="580.0" text="loggedinUserValue">
          <padding>
             <Insets left="10.0" />
          </padding>
@@ -18,21 +18,21 @@
         <menus>
           <Menu mnemonicParsing="false" text="%menu.products">
             <items>
-              <MenuItem mnemonicParsing="false" text="%menu.products.add" onAction="#newProduct"/>
-              <MenuItem mnemonicParsing="false" text="%menu.products.list" onAction="#listProducts"/>
+              <MenuItem mnemonicParsing="false" onAction="#newProduct" text="%menu.products.add" />
+              <MenuItem mnemonicParsing="false" onAction="#listProducts" text="%menu.products.list" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.sales">
             <items>
-              <MenuItem mnemonicParsing="false" text="%menu.sales.add" onAction="#noImpl"/>
-                  <MenuItem mnemonicParsing="false" text="%menu.sales.list" onAction="#noImpl"/>
+              <MenuItem mnemonicParsing="false" onAction="#newSale" text="%menu.sales.add" />
+                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.sales.list" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.account">
             <items>
-              <MenuItem mnemonicParsing="false" text="%menu.account.logout" onAction="#logOut"/>
-                  <MenuItem mnemonicParsing="false" text="%menu.account.add" onAction="#noImpl"/>
-                  <MenuItem mnemonicParsing="false" text="%menu.account.list" onAction="#noImpl"/>
+              <MenuItem mnemonicParsing="false" onAction="#logOut" text="%menu.account.logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.add" />
+                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.list" />
             </items>
           </Menu>
         </menus>

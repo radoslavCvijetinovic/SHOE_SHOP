@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Rajko
  */
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.rcs.shoe.shop.core.repository"})
+@EnableJpaRepositories(basePackages = {"com.rcs.shoe.shop.core.repository", "com.rcs.shoe.shop.core.repository.view"})
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @Import(SecurityConfig.class)

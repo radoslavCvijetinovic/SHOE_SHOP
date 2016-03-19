@@ -5,7 +5,8 @@
  */
 package com.rcs.shoe.shop.core.repository;
 
-import com.rcs.shoe.shop.core.entity.Product;
+import com.rcs.shoe.shop.core.entity.impl.Product;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -15,5 +16,9 @@ import org.springframework.data.repository.CrudRepository;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     public Product findByProductCode(String productCode);
+    
+    public Product findByProductCodeAndProductNum(String productCode, Integer productNum);
+
+    public List<Product> findByProductNum(Integer productNum);
 
 }

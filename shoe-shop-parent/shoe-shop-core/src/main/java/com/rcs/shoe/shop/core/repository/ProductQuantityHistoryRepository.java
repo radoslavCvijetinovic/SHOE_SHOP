@@ -5,15 +5,13 @@
  */
 package com.rcs.shoe.shop.core.repository;
 
-import com.rcs.shoe.shop.core.entity.V_Products;
+import com.rcs.shoe.shop.core.entity.impl.ProductQuantityHistory;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author Rajko
  */
-public interface V_ProductsRepository extends CrudRepository<V_Products, Long> {
-
-    public V_Products findByProductCode(String productCode);
-
+public interface ProductQuantityHistoryRepository extends CrudRepository<ProductQuantityHistory, Long>{
+    
 }

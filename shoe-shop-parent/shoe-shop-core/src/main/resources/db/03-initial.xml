@@ -160,7 +160,17 @@
                     replaceIfExists="true"
                     schemaName="public"
                     viewName="v_products">
-            select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity from products as pr left outer join product_quantity_history as pqh on pr.product_code = pqh.product_code group by pr.product_code
+            select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
+            from products as pr left outer join product_quantity_history as pqh on pr.product_code = pqh.product_code
+            group by pr.product_code
+        </createView>
+        <createView catalogName="cat"
+                    replaceIfExists="true"
+                    schemaName="public"
+                    viewName="v_product_quantity_history">
+            select cast(max(pqh.id) as long) as id, pqh.product_code, pqh.size, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
+            from product_quantity_history as pqh
+            group by product_code, size
         </createView>
     </changeSet>
 </databaseChangeLog>

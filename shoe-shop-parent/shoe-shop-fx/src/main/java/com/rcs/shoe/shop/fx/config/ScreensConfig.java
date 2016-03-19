@@ -7,6 +7,7 @@ import com.rcs.shoe.shop.fx.controller.ui.MainController;
 import com.rcs.shoe.shop.fx.controller.ui.NewProductController;
 import com.rcs.shoe.shop.fx.controller.ui.NotImplementedController;
 import com.rcs.shoe.shop.fx.controller.ui.ProductsController;
+import com.rcs.shoe.shop.fx.controller.ui.SaleEnterController;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
 import java.net.URL;
 import java.util.Observable;
@@ -43,6 +44,7 @@ public class ScreensConfig implements Observer {
     private LanguageModel lang;
     private StackPane root;
     private StackPane mainStackPane;
+    private Image icon = null;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.stage = primaryStage;
@@ -64,7 +66,8 @@ public class ScreensConfig implements Observer {
         root = new StackPane();
         root.getStylesheets().add(Constants.STYLE_FILE_PATH);
         stage.setTitle(Constants.APP_TITLE);
-        stage.getIcons().add(new Image(getClass().getResource(Constants.ICON_FILE_PATH).toExternalForm()));
+        icon = new Image(getClass().getResource(Constants.ICON_FILE_PATH).toExternalForm());
+        stage.getIcons().add(icon);
         scene = new Scene(root, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -124,8 +127,29 @@ public class ScreensConfig implements Observer {
         setNodeToMain(getNode(newProductController(), getClass().getResource(Constants.NEW_PRODUCT_FXML)));
     }
 
+    public void loadEditProduct(String productCode, boolean fromSale) {
+        NewProductController controller = newProductController();
+        controller.setProductCode(productCode);
+        controller.setFromSale(fromSale);
+        setNodeToMain(getNode(controller, getClass().getResource(Constants.NEW_PRODUCT_FXML)));
+    }
+
     public void loadNotImplemented() {
         setNodeToMain(getNode(notImplementedController(), getClass().getResource(Constants.NOT_IMPL_FXML)));
+    }
+
+    public void loadNewSale() {
+        setNodeToMain(getNode(newSaleEnterController(), getClass().getResource(Constants.SALE_FXML)));
+    }
+
+    public void loadNewSale(String productCode) {
+        SaleEnterController saleEnterController = newSaleEnterController();
+        saleEnterController.setProductCode(productCode);
+        setNodeToMain(getNode(saleEnterController, getClass().getResource(Constants.SALE_FXML)));
+    }
+
+    public Image getIcon() {
+        return icon;
     }
 
     private Node getNode(final Controller controller, URL location) {
@@ -170,8 +194,14 @@ public class ScreensConfig implements Observer {
 
     @Bean
     @Scope("prototype")
-    Controller newProductController() {
+    NewProductController newProductController() {
         return new NewProductController(this);
+    }
+
+    @Bean
+    @Scope("prototype")
+    SaleEnterController newSaleEnterController() {
+        return new SaleEnterController(this);
     }
 
     public Stage getStage() {

@@ -5,7 +5,7 @@
  */
 package com.rcs.shoe.shop.core.repository;
 
-import com.rcs.shoe.shop.core.entity.ProductSizes;
+import com.rcs.shoe.shop.core.entity.impl.ProductSizes;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
