@@ -7,11 +7,13 @@ package com.rcs.shoe.shop.fx.controller.ui;
 
 import com.rcs.shoe.shop.core.service.UserService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import com.rcs.shoe.shop.fx.utils.SecurityUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,9 +27,10 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     private Label loggedinUserValue;
-
     @FXML
     private StackPane mainStackPane;
+    @FXML
+    private MenuItem newProductMenuItem;
 
     @Autowired
     private UserService userService;
@@ -40,6 +43,8 @@ public class MainController extends Controller implements Initializable {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         loggedinUserValue.setText(authentication.getName());
+        
+        newProductMenuItem.visibleProperty().setValue(SecurityUtils.isAdmin());
     }
 
     public void logOut() {

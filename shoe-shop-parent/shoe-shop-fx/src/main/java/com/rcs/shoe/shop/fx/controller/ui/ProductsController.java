@@ -8,6 +8,7 @@ package com.rcs.shoe.shop.fx.controller.ui;
 import com.rcs.shoe.shop.core.entity.impl.view.V_Products;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import com.rcs.shoe.shop.fx.utils.SecurityUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,6 +44,8 @@ public class ProductsController extends Controller implements Initializable {
     private Label selProductCode;
     @FXML
     private Label selProductNum;
+    @FXML
+    private Button changeProdStateBtn;
 
     @Autowired
     private ProductService productService;
@@ -72,6 +76,12 @@ public class ProductsController extends Controller implements Initializable {
         ObservableList<V_Products> prod = FXCollections.observableArrayList(productService.findAll());
         products = new FilteredList<>(prod, p -> true);
         productsTable.setItems(products);
+
+        initVisibility();
+    }
+
+    private void initVisibility() {
+        changeProdStateBtn.visibleProperty().setValue(SecurityUtils.isAdmin());
     }
 
     public void filterTable() {

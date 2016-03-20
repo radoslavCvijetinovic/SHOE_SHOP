@@ -18,7 +18,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="%menu.products">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#newProduct" text="%menu.products.add" />
+              <MenuItem fx:id="newProductMenuItem" mnemonicParsing="false" onAction="#newProduct" text="%menu.products.add" />
               <MenuItem mnemonicParsing="false" onAction="#listProducts" text="%menu.products.list" />
             </items>
           </Menu>
@@ -26,13 +26,14 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newSale" text="%menu.sales.add" />
                   <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.sales.list" />
+                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="Storniranje" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.account">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#logOut" text="%menu.account.logout" />
-                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.add" />
-                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.list" />
+              <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.add" />
+              <MenuItem mnemonicParsing="false" onAction="#noImpl" text="%menu.account.list" />
             </items>
           </Menu>
         </menus>

@@ -10,6 +10,7 @@ import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
 import com.rcs.shoe.shop.core.entity.impl.view.V_ProductHistory;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import com.rcs.shoe.shop.fx.utils.SecurityUtils;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -85,7 +86,7 @@ public class SaleEnterController extends Controller implements Initializable {
 
         storedProduct = null;
     }
-    
+
     private void initializeHandlers() {
         produstNumberText.textProperty().addListener(getDigitChangeListener(produstNumberText));
     }
@@ -181,10 +182,16 @@ public class SaleEnterController extends Controller implements Initializable {
     }
 
     private void noQuantitySale() {
-        if (showConfirmPopup("Prodaja",
-                "Pokušali ste da unesete prodaju za proizvod koji nije na stanju.",
-                "Da li želite da izmenite stanje za ovaj proizvod?")) {
-            uIConfig.loadEditProduct(storedProduct.getProductCode(), true);
+        if (SecurityUtils.isAdmin()) {
+            if (showConfirmPopup("Prodaja",
+                    "Pokušali ste da unesete prodaju za proizvod koji nije na stanju.",
+                    "Da li želite da izmenite stanje za ovaj proizvod?")) {
+                uIConfig.loadEditProduct(storedProduct.getProductCode(), true);
+            }
+        } else {
+            showInformationPopup("Prodaja", 
+                    "Pokušali ste da unesete prodaju za proizvod koji nije na stanju.",
+                    "Kontaktirajte korisnika sa administratorskim pravom radi izmene stanja.");
         }
     }
 
@@ -203,7 +210,7 @@ public class SaleEnterController extends Controller implements Initializable {
             productService.saveProductQuantityHistory(quantityHistory);
 
             showInformationPopup("Uspešan unos!", "Prodaja je uspešno evidentirana.", "");
-            
+
             setProductOnForm();
         }
 
@@ -226,6 +233,5 @@ public class SaleEnterController extends Controller implements Initializable {
     public void setProductCode(String productCode) {
         this.productCodeStr = productCode;
     }
-
 
 }
