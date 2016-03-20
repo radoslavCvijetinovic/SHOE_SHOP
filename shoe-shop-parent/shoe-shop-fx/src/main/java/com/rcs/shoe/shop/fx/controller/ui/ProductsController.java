@@ -8,6 +8,7 @@ package com.rcs.shoe.shop.fx.controller.ui;
 import com.rcs.shoe.shop.core.entity.impl.view.V_Products;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import com.rcs.shoe.shop.fx.controller.ReportingController;
 import com.rcs.shoe.shop.fx.utils.SecurityUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,6 +50,8 @@ public class ProductsController extends Controller implements Initializable {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ReportingController reportingController;
 
     private FilteredList<V_Products> products;
 
@@ -127,6 +130,10 @@ public class ProductsController extends Controller implements Initializable {
         showInformationPopup("Selektuje proizvod",
                 "Da bi ste izvršili akciju, selektujte željeni proizvod u tabeli.",
                 "");
+    }
+    
+    public void productsReport() {
+        reportingController.productsToPdf(products);
     }
 
 }

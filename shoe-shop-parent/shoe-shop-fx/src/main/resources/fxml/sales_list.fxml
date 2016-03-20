@@ -18,9 +18,10 @@
                 <TableColumn prefWidth="150.0" text="ID" />
                 <TableColumn prefWidth="150.0" text="Šifra" />
                 <TableColumn prefWidth="150.0" text="Redni broj" />
-                <TableColumn prefWidth="150.0" text="Velicina" />
+                <TableColumn prefWidth="150.0" text="Veličina" />
                 <TableColumn prefWidth="150.0" text="Vreme" />
             </columns>
         </TableView>
+      <Button layoutX="602.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="PDF" onAction="#loadReports"/>
     </children>
 </Pane>

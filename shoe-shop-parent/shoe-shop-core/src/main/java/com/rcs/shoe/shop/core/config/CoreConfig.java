@@ -80,7 +80,7 @@ public class CoreConfig {
         return new HikariDataSource(dataSourceConfig);
     }
 
-   @Bean(name = "liquibase")
+    @Bean(name = "liquibase")
     public SpringLiquibase liquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
 

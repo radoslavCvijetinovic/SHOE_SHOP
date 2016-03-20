@@ -8,11 +8,16 @@ package com.rcs.shoe.shop.fx.config;
 import com.rcs.shoe.shop.core.config.CoreConfig;
 import com.rcs.shoe.shop.fx.controller.LanguageController;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
+import com.rcs.shoe.shop.fx.controller.ReportingController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
+import net.sf.dynamicreports.report.builder.DynamicReports;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 /**
  *
@@ -36,6 +41,17 @@ public class AppConfig {
     @Bean
     LanguageController languageController() {
         return new LanguageController(languageModel());
+    }
+
+    @Bean
+    @Scope("prototype")
+    JasperReportBuilder getReportBuilder() {
+        return DynamicReports.report();
+    }
+
+    @Bean
+    ReportingController getReportingUtils() {
+        return new ReportingController();
     }
 
 }

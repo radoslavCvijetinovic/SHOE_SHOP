@@ -24,15 +24,10 @@
       <Label fx:id="selProductCode" layoutX="508.0" layoutY="210.0" prefHeight="17.0" prefWidth="139.0" text="" />
       <Label fx:id="selProductNum" layoutX="508.0" layoutY="238.0" prefHeight="17.0" prefWidth="139.0" text="" />
       <Button layoutX="432.0" layoutY="271.0" mnemonicParsing="false" onAction="#productSale" prefHeight="23.0" prefWidth="100.0" text="Prodaja" />
-      <Button layoutX="542.0" layoutY="270.0" 
-              mnemonicParsing="false" 
-              onAction="#changeProductState" 
-              prefHeight="23.0" prefWidth="100.0" 
-              text="Promena stanja"
-              fx:id="changeProdStateBtn"
-       />
+      <Button fx:id="changeProdStateBtn" layoutX="542.0" layoutY="270.0" mnemonicParsing="false" onAction="#changeProductState" prefHeight="23.0" prefWidth="100.0" text="Promena stanja" />
       <Label layoutX="418.0" layoutY="55.0" text="Pretraga:" />
       <Label layoutX="433.0" layoutY="82.0" text="Šifra:" />
       <Label layoutX="433.0" layoutY="112.0" text="Redni broj:" />
+      <Button layoutX="542.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="PDF" onAction="#productsReport" />
     </children>
 </Pane>

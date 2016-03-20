@@ -8,6 +8,7 @@ package com.rcs.shoe.shop.fx.controller.ui;
 import com.rcs.shoe.shop.core.entity.impl.ProductHistory;
 import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import com.rcs.shoe.shop.fx.controller.ReportingController;
 import com.rcs.shoe.shop.fx.utils.DateUtils;
 import java.net.URL;
 import java.time.LocalDate;
@@ -38,6 +39,10 @@ public class SalesListController extends Controller implements Initializable {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ReportingController reportingController;
+
+    private ObservableList<ProductHistory> sales;
 
     public SalesListController(ScreensConfig uIConfig) {
         super(uIConfig);
@@ -82,10 +87,17 @@ public class SalesListController extends Controller implements Initializable {
         Date from = DateUtils.convert(createdDateDpFrom.getValue());
         Date to = DateUtils.convert(createdDateDpTo.getValue());
 
-        ObservableList<ProductHistory> sales = FXCollections.observableArrayList(
+        sales = FXCollections.observableArrayList(
                 productService.getSalesHistoryByDate(from, to));
 
         salesTable.setItems(sales);
+    }
+
+    public void loadReports() {
+        Date from = DateUtils.convert(createdDateDpFrom.getValue());
+        Date to = DateUtils.convert(createdDateDpTo.getValue());
+        reportingController.salesToPdf(sales, from, to);
+
     }
 
 }
