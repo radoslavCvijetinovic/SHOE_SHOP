@@ -28,6 +28,8 @@ Name: "serbianlatin"; MessagesFile: "compiler:Languages\SerbianLatin.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+Source: "{%HOMEPATH}\shoe-shop\data\spring-shoe-shop.db.mv.db"; DestDir: "{%HOMEPATH}\shoe-shop\backup\"; Flags: external skipifsourcedoesntexist uninsneveruninstall
+Source: "{%HOMEPATH}\shoe-shop\data\spring-shoe-shop.db.trace.db"; DestDir: "{%HOMEPATH}\shoe-shop\backup\"; Flags: external skipifsourcedoesntexist uninsneveruninstall
 Source: "D:\PROJECTS\SHOE_SHOP\SHOE_SHOP\shoe-shop-parent\shoe-shop-fx\target\jfx\native\shoe-shop-fx\shoe-shop-fx.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\PROJECTS\SHOE_SHOP\SHOE_SHOP\shoe-shop-parent\shoe-shop-fx\target\jfx\native\shoe-shop-fx\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
