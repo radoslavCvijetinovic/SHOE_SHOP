@@ -7,6 +7,7 @@ import com.rcs.shoe.shop.fx.controller.ui.MainController;
 import com.rcs.shoe.shop.fx.controller.ui.NewProductController;
 import com.rcs.shoe.shop.fx.controller.ui.NotImplementedController;
 import com.rcs.shoe.shop.fx.controller.ui.ProductsController;
+import com.rcs.shoe.shop.fx.controller.ui.SaleCancelController;
 import com.rcs.shoe.shop.fx.controller.ui.SaleEnterController;
 import com.rcs.shoe.shop.fx.controller.ui.SalesListController;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
@@ -153,6 +154,10 @@ public class ScreensConfig implements Observer {
         setNodeToMain(getNode(newSalesListController(), getClass().getResource(Constants.SALES_LIST_FXML)));
     }
 
+    public void loadSaleCancel() {
+        setNodeToMain(getNode(newSaleCancelController(), getClass().getResource(Constants.SALE_CANCEL_FXML)));
+    }
+
     public Image getIcon() {
         return icon;
     }
@@ -213,6 +218,12 @@ public class ScreensConfig implements Observer {
     @Scope("prototype")
     SalesListController newSalesListController() {
         return new SalesListController(this);
+    }
+
+    @Bean
+    @Scope("prototype")
+    SaleCancelController newSaleCancelController() {
+        return new SaleCancelController(this);
     }
 
     public Stage getStage() {

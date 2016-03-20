@@ -72,6 +72,10 @@ public class MainController extends Controller implements Initializable {
     public void salesList(){
         uIConfig.loadSalesList();
     }
+    
+    public void saleCancel() {
+        uIConfig.loadSaleCancel();
+    }
 
     public StackPane getMainStackPane() {
         return this.mainStackPane;

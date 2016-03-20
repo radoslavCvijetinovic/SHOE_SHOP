@@ -26,7 +26,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newSale" text="%menu.sales.add" />
                   <MenuItem mnemonicParsing="false" onAction="#salesList" text="%menu.sales.list" />
-                  <MenuItem mnemonicParsing="false" onAction="#noImpl" text="Storniranje" />
+                  <MenuItem mnemonicParsing="false" onAction="#saleCancel" text="Storniranje" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.account">

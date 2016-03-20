@@ -86,4 +86,12 @@ public class ProductService {
         return productHistoryRepository.findByCreationTimeBetweenAndTypeOrderByCreationTimeDesc(from, to, 3);
     }
 
+    public ProductHistory findHistoryById(Long id) {
+        return productHistoryRepository.findOne(id);
+    }
+
+    public void updateProductHistory(ProductHistory sale) {
+        productHistoryRepository.save(sale);
+    }
+
 }
