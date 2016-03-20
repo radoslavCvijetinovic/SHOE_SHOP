@@ -81,7 +81,7 @@ public class SaleCancelController extends Controller implements Initializable {
         }
 
         if (StringUtils.isBlank(passwordTx.textProperty().getValue()) || !SecurityUtils.getPassword().equals(passwordTx.textProperty().getValue().trim())) {
-            showInformationPopup("Pogrešna lozinka.", "Uneta lozinka ne pripada trenutnom korisniku!.", null);
+            showInformationPopup("Pogrešna lozinka.", "Uneta lozinka ne pripada trenutnom korisniku!", null);
             reset();
             return;
         }
@@ -89,7 +89,7 @@ public class SaleCancelController extends Controller implements Initializable {
         ProductHistory sale = productService.findHistoryById(id);
 
         if (sale == null || sale.getType() != 3) {
-            showInformationPopup("Prodaja za id nije pronadjena.", "Prodaja za id nije pronadjena!.", null);
+            showInformationPopup("Prodaja za id nije pronadjena.", "Prodaja za id nije pronadjena!", null);
             return;
         } else {
             setSaleData(sale);
