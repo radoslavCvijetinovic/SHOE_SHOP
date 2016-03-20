@@ -8,6 +8,7 @@ import com.rcs.shoe.shop.core.repository.ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.ProductRepository;
 import com.rcs.shoe.shop.core.repository.view.V_ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.view.V_ProductsRepository;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,6 +80,10 @@ public class ProductService {
 
     public List<Product> findByProductNum(String productNum) {
         return productRepository.findByProductNum(Integer.parseInt(productNum));
+    }
+
+    public List<ProductHistory> getSalesHistoryByDate(Date from, Date to) {
+        return productHistoryRepository.findByCreationTimeBetweenAndTypeOrderByCreationTimeDesc(from, to, 3);
     }
 
 }

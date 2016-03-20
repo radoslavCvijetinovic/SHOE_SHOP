@@ -68,6 +68,10 @@ public class MainController extends Controller implements Initializable {
     public void newSale(){
         uIConfig.loadNewSale();
     }
+    
+    public void salesList(){
+        uIConfig.loadSalesList();
+    }
 
     public StackPane getMainStackPane() {
         return this.mainStackPane;

@@ -19,12 +19,15 @@ public class ProductHistory extends AbstractAudit {
     @Column(name = "product_code", nullable = false)
     private String productCode;
 
+    @Column(name = "product_num", nullable = false)
+    protected Integer productNum;
+
     @Column(name = "size", nullable = false)
     private Integer size;
 
     @Column(name = "type", nullable = false)
     private Integer type;
-    
+
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
@@ -43,7 +46,7 @@ public class ProductHistory extends AbstractAudit {
     public void setType(Integer type) {
         this.type = type;
     }
-    
+
     public String getProductCode() {
         return productCode;
     }
@@ -67,5 +70,12 @@ public class ProductHistory extends AbstractAudit {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-    
+
+    public Integer getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(Integer productNum) {
+        this.productNum = productNum;
+    }
 }

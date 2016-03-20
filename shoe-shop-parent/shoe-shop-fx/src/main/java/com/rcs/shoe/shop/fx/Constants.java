@@ -22,5 +22,6 @@ public class Constants {
     public static final String NEW_PRODUCT_FXML = "/fxml/new_product.fxml";
     public static final String NOT_IMPL_FXML = "/fxml/not_implemented.fxml";
     public static final String SALE_FXML = "/fxml/sale.fxml";
+    public static final String SALES_LIST_FXML = "/fxml/sales_list.fxml";
 
 }

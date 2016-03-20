@@ -203,6 +203,7 @@ public class SaleEnterController extends Controller implements Initializable {
         if (showConfirmPopup("Da li ste sigurni?", message)) {
             ProductHistory quantityHistory = new ProductHistory();
             quantityHistory.setProductCode(storedProduct.getProductCode());
+            quantityHistory.setProductNum(storedProduct.getProductNum());
             quantityHistory.setSize(getSize(button));
             quantityHistory.setType(3);
             quantityHistory.setQuantity(-1);

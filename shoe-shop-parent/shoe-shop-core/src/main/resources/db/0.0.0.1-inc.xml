@@ -122,6 +122,9 @@
             <column name="product_code" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="product_num" type="int">
+                <constraints nullable="false"/>
+            </column>
             <column name="size" type="int">
                 <constraints nullable="false"/>
             </column>
@@ -150,12 +153,12 @@
                           incrementBy="1"
                           startWith="100"
                           tableName="product_history"/>
-        <addForeignKeyConstraint baseColumnNames="product_code"
+        <addForeignKeyConstraint baseColumnNames="product_code, product_num"
                                  baseTableName="product_history"
                                  constraintName="fk_product_product_history"
                                  onDelete="CASCADE"
                                  onUpdate="CASCADE"
-                                 referencedColumnNames="product_code"
+                                 referencedColumnNames="product_code, product_num"
                                  referencedTableName="products"/>
         <!-- PRODUCT HISTORY TABLE END -->
         

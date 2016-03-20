@@ -303,6 +303,7 @@ public class NewProductController extends Controller implements Initializable {
             if (oldValue > newValue) {
                 ProductHistory quantityHistory = new ProductHistory();
                 quantityHistory.setProductCode(productCode.getText());
+                quantityHistory.setProductNum(Integer.parseInt(produstNumber.getText()));
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(2);
                 quantityHistory.setQuantity(newValue - oldValue);
@@ -310,6 +311,7 @@ public class NewProductController extends Controller implements Initializable {
             } else if (oldValue < newValue) {
                 ProductHistory quantityHistory = new ProductHistory();
                 quantityHistory.setProductCode(productCode.getText());
+                quantityHistory.setProductNum(Integer.parseInt(produstNumber.getText()));
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(1);
                 quantityHistory.setQuantity(newValue - oldValue);
