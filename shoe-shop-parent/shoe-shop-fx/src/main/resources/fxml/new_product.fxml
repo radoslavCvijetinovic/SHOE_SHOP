@@ -9,11 +9,11 @@
 <Pane fx:id="newProductPane" maxHeight="600.0" maxWidth="800.0" prefHeight="600" prefWidth="800" styleClass="main-panel" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rcs.shoe.shop.fx.controller.ui.NewProductController">
     <children>
         <Label layoutX="20.0" layoutY="20.0" text="Promena stanja (ulaz izlaz)" />
-        <Label layoutX="20.0" layoutY="63.0" text="Sifra:" />
-        <TextField fx:id="productCode" layoutX="110.0" layoutY="60.0" promptText="Šifra" />
-        <Button fx:id="searchProductButton" layoutX="280.0" layoutY="60.0" mnemonicParsing="false" onAction="#searchProduct" prefHeight="23.0" prefWidth="100.0" text="Proveri sifru" />
-        <Label fx:id="produstNumberLabel" layoutX="20.0" layoutY="93.0" text="Redni broj:" />
-        <TextField fx:id="produstNumber" layoutX="110.0" layoutY="90.0" promptText="Redni broj" />
+        <Label fx:id="productCodeLabel" layoutX="20.0" layoutY="93.0" text="Sifra:" />
+        <TextField fx:id="productCode" layoutX="110.0" layoutY="89.0" promptText="Šifra" />
+        <Button fx:id="searchProductButton" layoutX="280.0" layoutY="60.0" mnemonicParsing="false" onAction="#searchProduct" prefHeight="25.0" prefWidth="118.0" text="Proveri redni broj" />
+        <Label fx:id="produstNumberLabel" layoutX="20.0" layoutY="64.0" text="Redni broj:" />
+        <TextField fx:id="produstNumber" layoutX="110.0" layoutY="60.0" promptText="Redni broj" />
         <Pane fx:id="sizesPane" layoutX="10.0" layoutY="300.0" prefHeight="160.0" prefWidth="780.0">
             <children>
                 <Label layoutX="10.0" layoutY="10.0" text="Velicina" />

@@ -1,4 +1,3 @@
-
 package com.rcs.shoe.shop.core.entity.impl.view;
 
 import javax.persistence.Column;
@@ -18,6 +17,9 @@ public class V_ProductHistory {
 
     @Column(name = "product_code", nullable = false)
     private String productCode;
+
+    @Column(name = "product_num", nullable = false)
+    private Integer productNum;
 
     @Column(name = "size", nullable = false)
     private Integer size;
@@ -57,4 +59,11 @@ public class V_ProductHistory {
         this.size = size;
     }
 
+    public Integer getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(Integer productNum) {
+        this.productNum = productNum;
+    }
 }

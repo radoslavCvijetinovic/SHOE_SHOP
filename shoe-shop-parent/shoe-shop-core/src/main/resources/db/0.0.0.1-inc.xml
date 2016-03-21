@@ -94,8 +94,13 @@
                           startWith="100"
                           tableName="products"/>
         <addUniqueConstraint catalogName="cat"
-                             columnNames="product_code"
-                             constraintName="uk_product_code"
+                             columnNames="product_num"
+                             constraintName="uk_product_num"
+                             tableName="products"
+                             tablespace="A String"/>
+        <addUniqueConstraint catalogName="cat"
+                             columnNames="product_code, product_num"
+                             constraintName="uk_product_code_num"
                              tableName="products"
                              tablespace="A String"/>
         <addForeignKeyConstraint baseColumnNames="created_by_user"
@@ -167,9 +172,9 @@
                     replaceIfExists="true"
                     schemaName="public"
                     viewName="v_products">
-            select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
-            from products as pr left outer join product_history as pqh on pr.product_code = pqh.product_code
-            group by pr.product_code
+            select pr.*, coalesce(cast(sum(pqh.quantity) as int),0) as quantity 
+            from products as pr left outer join product_history as pqh on pr.product_num =  pqh.product_num
+            group by pr.product_num
         </createView>
         <!-- PRODUCTS VIEW END -->
         
@@ -178,9 +183,9 @@
                     replaceIfExists="true"
                     schemaName="public"
                     viewName="v_product_history">
-            select cast(max(pqh.id) as long) as id, pqh.product_code, pqh.size, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
+            select cast(max(pqh.id) as long) as id, product_num, pqh.product_code, pqh.size, coalesce(cast(sum(pqh.quantity) as int),0) as quantity
             from product_history as pqh
-            group by product_code, size
+            group by product_num, size
         </createView>
         <!-- PRODUCT_HISTORY VIEW END -->
         

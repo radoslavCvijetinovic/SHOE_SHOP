@@ -12,6 +12,7 @@ import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
 import com.rcs.shoe.shop.fx.utils.SecurityUtils;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -63,7 +65,7 @@ public class SaleEnterController extends Controller implements Initializable {
 
     private Map<String, Button> quantityButtons;
 
-    private String productCodeStr;
+    private Integer productNumber;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,8 +73,8 @@ public class SaleEnterController extends Controller implements Initializable {
         initializeQuantityFields();
         reset();
 
-        if (productCodeStr != null) {
-            searchProduct(productCodeStr, null, false);
+        if (productNumber != null) {
+            searchProduct(productNumber, null, false);
         }
     }
 
@@ -85,6 +87,8 @@ public class SaleEnterController extends Controller implements Initializable {
         produstNumberText.setDisable(false);
 
         storedProduct = null;
+        productCode.setText("");
+        produstNumberText.setText("");
     }
 
     private void initializeHandlers() {
@@ -110,25 +114,40 @@ public class SaleEnterController extends Controller implements Initializable {
 
     public void searchProduct() {
         String prodCode = productCode.getText();
-        String prodNumber = produstNumberText.getText();
+        String prodNumberTx = produstNumberText.getText();
 
-        searchProduct(prodCode, prodNumber, false);
+        if (NumberUtils.isDigits(prodNumberTx)) {
+            searchProduct(Integer.parseInt(prodNumberTx), prodCode, false);
+        } else {
+            searchProduct(null, prodCode, false);
+        }
     }
 
-    private void searchProduct(String productCode, String productNumber, boolean skipDialog) {
-        if (StringUtils.isNotBlank(productCode) && StringUtils.isNotBlank(productNumber)) {
+    private void searchProduct(Integer productNumber, String productCode, boolean skipDialog) {
+        if (StringUtils.isNotBlank(productCode) && productNumber != null) {
             storedProduct = productService.findByProductCodeAndProductNum(productCode, productNumber);
+        } else if (productNumber != null) {
+            storedProduct = productService.findByProductNum(productNumber);
         } else if (StringUtils.isNotBlank(productCode)) {
-            storedProduct = productService.findByProductCode(productCode);
-        } else if (StringUtils.isNotBlank(productNumber)) {
-            List<Product> prodList = productService.findByProductNum(productNumber);
+            List<Product> prodList = productService.findByProductCode(productCode);
             if (prodList.size() == 1) {
                 storedProduct = prodList.get(0);
             } else if (prodList.size() > 1) {
-                showInformationPopup("Unesite šifru proizvoda.",
-                        "Više proizvoda je pronadjeno sa rednim brojem: " + productNumber + "!",
-                        "Morate uneti i šifru proizvoda.");
-                return;
+                List<String> choises = getProductNumbers(prodList);
+                String prodNum = showChoiseDialog("Unos prodaje.",
+                        "Više proizvoda je pronadjeno sa šifrom: " + productCode + "!",
+                        "Izaberi redni broj: ",
+                        choises,
+                        choises.get(0));
+                if (NumberUtils.isDigits(prodNum)) {
+                    Integer pn = Integer.parseInt(prodNum);
+                    for (Product p : prodList) {
+                        if (p.getProductNum().equals(pn)) {
+                            storedProduct = p;
+                            break;
+                        }
+                    }
+                }
             }
         }
         if (storedProduct != null) {
@@ -143,7 +162,7 @@ public class SaleEnterController extends Controller implements Initializable {
     }
 
     private void setProductOnForm() {
-        setQuantities(productService.getProductQuantitiesMap(storedProduct.getProductCode()));
+        setQuantities(productService.getProductQuantitiesMap(storedProduct.getProductNum()));
         productCode.textProperty().setValue(storedProduct.getProductCode());
         produstNumberText.textProperty().setValue(storedProduct.getProductNum().toString());
 
@@ -186,10 +205,10 @@ public class SaleEnterController extends Controller implements Initializable {
             if (showConfirmPopup("Prodaja",
                     "Pokušali ste da unesete prodaju za proizvod koji nije na stanju.",
                     "Da li želite da izmenite stanje za ovaj proizvod?")) {
-                uIConfig.loadEditProduct(storedProduct.getProductCode(), true);
+                uIConfig.loadEditProduct(storedProduct.getProductNum(), true);
             }
         } else {
-            showInformationPopup("Prodaja", 
+            showInformationPopup("Prodaja",
                     "Pokušali ste da unesete prodaju za proizvod koji nije na stanju.",
                     "Kontaktirajte korisnika sa administratorskim pravom radi izmene stanja.");
         }
@@ -228,11 +247,19 @@ public class SaleEnterController extends Controller implements Initializable {
     }
 
     public void changeProductQuantity() {
-        uIConfig.loadEditProduct(storedProduct.getProductCode(), true);
+        uIConfig.loadEditProduct(storedProduct.getProductNum(), true);
     }
 
-    public void setProductCode(String productCode) {
-        this.productCodeStr = productCode;
+    public void setProductNumber(Integer productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    private List<String> getProductNumbers(List<Product> prodList) {
+        List<String> result = new ArrayList<>();
+        for (Product p : prodList) {
+            result.add(p.getProductNum().toString());
+        }
+        return result;
     }
 
 }

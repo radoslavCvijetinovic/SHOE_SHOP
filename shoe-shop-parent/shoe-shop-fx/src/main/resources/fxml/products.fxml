@@ -10,9 +10,9 @@
         <Label fx:id="notImplementedLabel" layoutX="20.0" layoutY="20" text="%label.products.list" />
         <TableView fx:id="productsTable" layoutX="20.0" layoutY="55.0" prefHeight="450.0" prefWidth="362.0">
             <columns>
-                <TableColumn maxWidth="120.0" prefWidth="120.0" text="Šifra" />
-                <TableColumn maxWidth="120.0" prefWidth="120.0" text="Redni broj" />
-                <TableColumn maxWidth="120.0" prefWidth="120.0" text="Kolicina" />
+                <TableColumn prefWidth="120.0" text="Redni broj" />
+                <TableColumn prefWidth="120.0" text="Šifra" />
+                <TableColumn prefWidth="120.0" text="Kolicina" />
             </columns>
         </TableView>
       <TextField fx:id="productCode" layoutX="508.0" layoutY="78.0" promptText="Šifra" />

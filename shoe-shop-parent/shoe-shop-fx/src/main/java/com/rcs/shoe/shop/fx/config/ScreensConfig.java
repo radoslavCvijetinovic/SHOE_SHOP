@@ -129,9 +129,9 @@ public class ScreensConfig implements Observer {
         setNodeToMain(getNode(newProductController(), getClass().getResource(Constants.NEW_PRODUCT_FXML)));
     }
 
-    public void loadEditProduct(String productCode, boolean fromSale) {
+    public void loadEditProduct(Integer productNumber, boolean fromSale) {
         NewProductController controller = newProductController();
-        controller.setProductCode(productCode);
+        controller.setProductNumber(productNumber);
         controller.setFromSale(fromSale);
         setNodeToMain(getNode(controller, getClass().getResource(Constants.NEW_PRODUCT_FXML)));
     }
@@ -144,9 +144,9 @@ public class ScreensConfig implements Observer {
         setNodeToMain(getNode(newSaleEnterController(), getClass().getResource(Constants.SALE_FXML)));
     }
 
-    public void loadNewSale(String productCode) {
+    public void loadNewSale(Integer productNumber) {
         SaleEnterController saleEnterController = newSaleEnterController();
-        saleEnterController.setProductCode(productCode);
+        saleEnterController.setProductNumber(productNumber);
         setNodeToMain(getNode(saleEnterController, getClass().getResource(Constants.SALE_FXML)));
     }
 

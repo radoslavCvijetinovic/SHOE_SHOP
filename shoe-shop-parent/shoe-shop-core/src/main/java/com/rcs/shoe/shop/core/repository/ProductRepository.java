@@ -15,10 +15,10 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    public Product findByProductCode(String productCode);
+    public List<Product> findByProductCode(String productCode);
     
     public Product findByProductCodeAndProductNum(String productCode, Integer productNum);
 
-    public List<Product> findByProductNum(Integer productNum);
+    public Product findByProductNum(Integer productNum);
 
 }
