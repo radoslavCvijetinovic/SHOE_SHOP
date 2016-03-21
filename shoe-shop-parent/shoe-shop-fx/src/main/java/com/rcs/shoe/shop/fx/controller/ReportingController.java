@@ -47,9 +47,9 @@ public class ReportingController {
                 .setBackgroundColor(Color.LIGHT_GRAY);
 
         salesReportBuilder.columns(
-                Columns.column("Šifra proizvoda", "productCode", DataTypes.stringType())
-                .setHorizontalAlignment(HorizontalAlignment.CENTER),
                 Columns.column("Redni broj", "productNum", DataTypes.integerType())
+                .setHorizontalAlignment(HorizontalAlignment.CENTER),
+                Columns.column("Šifra proizvoda", "productCode", DataTypes.stringType())
                 .setHorizontalAlignment(HorizontalAlignment.CENTER),
                 Columns.column("Velicina", "size", DataTypes.integerType())
                 .setHorizontalAlignment(HorizontalAlignment.CENTER),
@@ -60,9 +60,9 @@ public class ReportingController {
                 .setColumnTitleStyle(columnTitleStyle);
 
         productsReportBuilder.columns(
-                Columns.column("Šifra proizvoda", "productCode", DataTypes.stringType())
-                .setHorizontalAlignment(HorizontalAlignment.CENTER),
                 Columns.column("Redni broj", "productNum", DataTypes.integerType())
+                .setHorizontalAlignment(HorizontalAlignment.CENTER),
+                Columns.column("Šifra proizvoda", "productCode", DataTypes.stringType())
                 .setHorizontalAlignment(HorizontalAlignment.CENTER),
                 Columns.column("Kolicina", "quantity", DataTypes.integerType())
                 .setHorizontalAlignment(HorizontalAlignment.CENTER))

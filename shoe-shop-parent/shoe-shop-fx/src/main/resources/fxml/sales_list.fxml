@@ -13,11 +13,11 @@
         <DatePicker fx:id="createdDateDpFrom" layoutX="48.0" layoutY="46.0" />
         <DatePicker fx:id="createdDateDpTo" layoutX="273.0" layoutY="46.0" />
         <Button layoutX="479.0" layoutY="46.0" mnemonicParsing="false" onAction="#filterTable" prefHeight="23.0" prefWidth="100.0" text="Trazi" />
-        <TableView fx:id="salesTable" layoutX="20.0" layoutY="92.0" prefHeight="420.0" prefWidth="750.0">
+        <TableView fx:id="salesTable" layoutX="20.0" layoutY="92.0" prefHeight="420.0" prefWidth="760.0">
             <columns>
                 <TableColumn prefWidth="150.0" text="ID" />
-                <TableColumn prefWidth="150.0" text="Šifra" />
                 <TableColumn prefWidth="150.0" text="Redni broj" />
+                <TableColumn prefWidth="150.0" text="Šifra" />
                 <TableColumn prefWidth="150.0" text="Veličina" />
                 <TableColumn prefWidth="150.0" text="Vreme" />
             </columns>

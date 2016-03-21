@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface V_ProductHistoryRepository extends CrudRepository<V_ProductHistory, Long>  {
 
-    public List<V_ProductHistory> findByProductCode(String productCode);
+    public List<V_ProductHistory> findByProductNum(Integer productNum);
     
 }

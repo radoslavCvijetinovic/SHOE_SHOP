@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class NewProductController extends Controller implements Initializable {
     @FXML
     private TextField produstNumber;
     @FXML
-    private Label produstNumberLabel;
+    private Label productCodeLabel;
     @FXML
     private Pane sizesPane;
     @FXML
@@ -76,7 +77,7 @@ public class NewProductController extends Controller implements Initializable {
 
     private Product storedProduct;
 
-    private String productCodeToEdit;
+    private Integer productNumberToEdit;
 
     private boolean fromSale;
 
@@ -87,13 +88,13 @@ public class NewProductController extends Controller implements Initializable {
         initializeHandlers();
         reset();
 
-        if (StringUtils.isNotBlank(productCodeToEdit)) {
-            searchProduct(productCodeToEdit, true);
+        if (productNumberToEdit != null) {
+            searchProduct(productNumberToEdit, true);
         }
     }
 
-    public void setProductCode(String productCode) {
-        productCodeToEdit = productCode;
+    public void setProductNumber(Integer productNumber) {
+        productNumberToEdit = productNumber;
     }
 
     private void initializeHandlers() {
@@ -128,15 +129,15 @@ public class NewProductController extends Controller implements Initializable {
             label.textProperty().setValue("0");
         });
 
-        produstNumber.setText("");
-        produstNumber.setVisible(false);
-        produstNumberLabel.setVisible(false);
+        productCode.setText("");
+        productCode.setVisible(false);
+        productCodeLabel.setVisible(false);
         sizesPane.setVisible(false);
         shortcutsPane.setVisible(false);
 
-        productCode.setEditable(true);
-        productCode.setDisable(false);
-        productCode.setText("");
+        produstNumber.setEditable(true);
+        produstNumber.setDisable(false);
+        produstNumber.setText("");
 
         saveProdButton.setVisible(false);
         resetProdFormButton.setVisible(false);
@@ -144,9 +145,9 @@ public class NewProductController extends Controller implements Initializable {
 
         allZeroRB.selectedProperty().setValue(false);
 
-        if (productCodeToEdit != null) {
+        if (productNumberToEdit != null) {
             if (fromSale) {
-                uIConfig.loadNewSale(productCodeToEdit);
+                uIConfig.loadNewSale(productNumberToEdit);
             } else {
                 uIConfig.loadProducts();
             }
@@ -154,29 +155,30 @@ public class NewProductController extends Controller implements Initializable {
     }
 
     public void searchProduct() {
-        String prodCode = productCode.getText();
-        searchProduct(prodCode, false);
+        if (NumberUtils.isDigits(produstNumber.getText())) {
+            Integer prodNumber = Integer.parseInt(produstNumber.getText());
+            searchProduct(prodNumber, false);
+        }
     }
 
-    private void searchProduct(String productCode, boolean skipDialog) {
-        if (StringUtils.isNotBlank(productCode)) {
-            storedProduct = productService.findByProductCode(productCode);
-            if (storedProduct != null) {
-                if (skipDialog) {
-                    openEditForm();
-                } else {
-                    openProductFoundDialog();
-                }
+    private void searchProduct(Integer productNumber, boolean skipDialog) {
+        storedProduct = productService.findByProductNum(productNumber);
+
+        if (storedProduct != null) {
+            if (skipDialog) {
+                openEditForm();
             } else {
-                openNewProductForm();
+                openProductFoundDialog();
             }
+        } else {
+            openNewProductForm();
         }
     }
 
     private void openProductFoundDialog() {
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Ova šifra proizvoda je zauzeta!");
-        alert.setHeaderText("Sifra proizvoda: " + productCode.textProperty().getValue() + " je zauzeta!");
+        alert.setTitle("Ovaj reni broj je zauzet!");
+        alert.setHeaderText("Redni broj: " + produstNumber.textProperty().getValue() + " je zauzet!");
         alert.setContentText("Da li želite da izmenite stanje za ovaj proizvod?");
 
         ButtonType okButton = new ButtonType("Da", ButtonData.OK_DONE);
@@ -194,13 +196,13 @@ public class NewProductController extends Controller implements Initializable {
     }
 
     private void openEditForm() {
-        setQuantities(productService.getProductQuantities(storedProduct.getProductCode()));
-        productCode.setEditable(false);
-        productCode.setDisable(true);
+        setQuantities(productService.getProductQuantities(storedProduct.getProductNum()));
+        productCodeLabel.setVisible(true);
+        productCode.setVisible(true);
         productCode.setText(storedProduct.getProductCode());
         produstNumber.setText(storedProduct.getProductNum().toString());
-        produstNumber.setVisible(true);
-        produstNumberLabel.setVisible(true);
+        produstNumber.setDisable(true);
+        produstNumber.setEditable(false);
         sizesPane.setVisible(true);
         shortcutsPane.setVisible(true);
         saveProdButton.setVisible(true);
@@ -218,11 +220,18 @@ public class NewProductController extends Controller implements Initializable {
     }
 
     private void openNewProductForm() {
-        productCode.setEditable(false);
-        productCode.setDisable(true);
-        produstNumber.setText("");
+
+        productCode.setEditable(true);
+        productCode.setDisable(false);
+        productCode.setVisible(true);
+        productCode.setText("");
+        productCodeLabel.setVisible(true);
+
         produstNumber.setVisible(true);
-        produstNumberLabel.setVisible(true);
+        produstNumber.setEditable(false);
+        produstNumber.setDisable(true);
+        produstNumber.setVisible(true);
+
         sizesPane.setVisible(true);
         shortcutsPane.setVisible(true);
         saveProdButton.setVisible(true);
@@ -255,12 +264,12 @@ public class NewProductController extends Controller implements Initializable {
 
     private boolean validate() {
         boolean valid = true;
-        String prodNum = produstNumber.textProperty().getValue();
-        if (StringUtils.isBlank(prodNum)) {
+        String prodCode = productCode.textProperty().getValue();
+        if (StringUtils.isBlank(prodCode)) {
             if (storedProduct != null) {
-                produstNumber.textProperty().setValue(storedProduct.getProductNum().toString());
+                productCode.textProperty().setValue(storedProduct.getProductCode());
             } else {
-                showProductNumberPopup();
+                showProductCodePopup();
                 valid = false;
             }
         }
@@ -274,11 +283,11 @@ public class NewProductController extends Controller implements Initializable {
     }
 
     private void updateExistingProduct() {
-        if (!produstNumber.getText().equals(storedProduct.getProductNum().toString())) {
-            storedProduct.setProductNum(new Integer(produstNumber.getText()));
+        storedProduct.setProductHistory(getProductQuantity());
+        if (!productCode.getText().equals(storedProduct.getProductCode())) {
+            storedProduct.setProductCode(productCode.getText());
         }
 
-        storedProduct.setProductHistory(getProductQuantity());
         productService.saveOrUpdateProduct(storedProduct);
     }
 
@@ -287,7 +296,7 @@ public class NewProductController extends Controller implements Initializable {
         product.setActive(Boolean.TRUE);
         product.setProductCode(productCode.getText());
         product.setProductNum(new Integer(produstNumber.getText()));
-        
+
         product.setProductHistory(getProductQuantity());
 
         productService.saveOrUpdateProduct(product);
@@ -302,8 +311,12 @@ public class NewProductController extends Controller implements Initializable {
 
             if (oldValue > newValue) {
                 ProductHistory quantityHistory = new ProductHistory();
-                quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setProductNum(Integer.parseInt(produstNumber.getText()));
+                if (storedProduct != null) {
+                     quantityHistory.setProductCode(storedProduct.getProductCode());
+                } else {
+                    quantityHistory.setProductCode(productCode.getText());
+                }
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(2);
                 quantityHistory.setQuantity(newValue - oldValue);
@@ -312,6 +325,11 @@ public class NewProductController extends Controller implements Initializable {
                 ProductHistory quantityHistory = new ProductHistory();
                 quantityHistory.setProductCode(productCode.getText());
                 quantityHistory.setProductNum(Integer.parseInt(produstNumber.getText()));
+                if (storedProduct != null) {
+                     quantityHistory.setProductCode(storedProduct.getProductCode());
+                } else {
+                    quantityHistory.setProductCode(productCode.getText());
+                }
                 quantityHistory.setSize(getSize(tx));
                 quantityHistory.setType(1);
                 quantityHistory.setQuantity(newValue - oldValue);
@@ -322,10 +340,10 @@ public class NewProductController extends Controller implements Initializable {
         return result;
     }
 
-    private void showProductNumberPopup() {
+    private void showProductCodePopup() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Redni broj!");
-        alert.setHeaderText("Redni broj ne može biti prazan !");
+        alert.setTitle("Šifra proizvoda!");
+        alert.setHeaderText("Šifra ne može biti prazna!");
         alert.setContentText("");
 
         ButtonType okButton = new ButtonType("Nastavi", ButtonData.OK_DONE);

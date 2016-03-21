@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -57,11 +58,11 @@ public class ProductsController extends Controller implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         TableColumn firstCol = (TableColumn) productsTable.getColumns().get(0);
-        PropertyValueFactory p1 = new PropertyValueFactory<>("productCode");
+        PropertyValueFactory p1 = new PropertyValueFactory<>("productNum");
         firstCol.setCellValueFactory(p1);
 
         TableColumn secCol = (TableColumn) productsTable.getColumns().get(1);
-        PropertyValueFactory p2 = new PropertyValueFactory<>("productNum");
+        PropertyValueFactory p2 = new PropertyValueFactory<>("productCode");
         secCol.setCellValueFactory(p2);
 
         TableColumn thirdCol = (TableColumn) productsTable.getColumns().get(2);
@@ -107,20 +108,22 @@ public class ProductsController extends Controller implements Initializable {
     }
 
     public void changeProductState() {
-        String prouctCode = selProductCode.textProperty().getValue();
+        String text = selProductNum.textProperty().getValue();
 
-        if (StringUtils.isNotBlank(prouctCode)) {
-            uIConfig.loadEditProduct(prouctCode, false);
+        if (NumberUtils.isDigits(text)) {
+            Integer prouctNumber = Integer.parseInt(selProductNum.textProperty().getValue());
+            uIConfig.loadEditProduct(prouctNumber, false);
         } else {
             showSelectProductpopup();
         }
     }
 
     public void productSale() {
-        String prouctCode = selProductCode.textProperty().getValue();
+        String text = selProductNum.textProperty().getValue();
 
-        if (StringUtils.isNotBlank(prouctCode)) {
-            uIConfig.loadNewSale(prouctCode);
+        if (NumberUtils.isDigits(text)) {
+            Integer prouctNumber = Integer.parseInt(selProductNum.textProperty().getValue());
+            uIConfig.loadNewSale(prouctNumber);
         } else {
             showSelectProductpopup();
         }

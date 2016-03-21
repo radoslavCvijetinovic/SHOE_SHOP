@@ -66,11 +66,11 @@ public class SalesListController extends Controller implements Initializable {
         firstCol.setCellValueFactory(p1);
 
         TableColumn secCol = (TableColumn) salesTable.getColumns().get(1);
-        PropertyValueFactory p2 = new PropertyValueFactory<>("productCode");
+        PropertyValueFactory p2 = new PropertyValueFactory<>("productNum");
         secCol.setCellValueFactory(p2);
 
         TableColumn thirdCol = (TableColumn) salesTable.getColumns().get(2);
-        PropertyValueFactory p3 = new PropertyValueFactory<>("productNum");
+        PropertyValueFactory p3 = new PropertyValueFactory<>("productCode");
         thirdCol.setCellValueFactory(p3);
 
         TableColumn fourthCol = (TableColumn) salesTable.getColumns().get(3);

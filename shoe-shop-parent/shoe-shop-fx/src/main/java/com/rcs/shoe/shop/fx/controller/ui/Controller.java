@@ -6,6 +6,7 @@
 package com.rcs.shoe.shop.fx.controller.ui;
 
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
+import java.util.List;
 import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -87,6 +89,23 @@ public abstract class Controller {
             }
         };
         return result;
+    }
+
+    protected String showChoiseDialog(String title,
+            String header,
+            String content,
+            List<String> choices,
+            String selected) {
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(selected, choices);
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+        dialog.setContentText(content);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        }
+        return null;
     }
 
     protected Integer getSize(TextField tx) {

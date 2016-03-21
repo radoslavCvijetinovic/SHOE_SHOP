@@ -52,17 +52,17 @@ public class ProductService {
         return products;
     }
 
-    public Product findByProductCode(String prodCode) {
+    public List<Product> findByProductCode(String prodCode) {
         return productRepository.findByProductCode(prodCode);
     }
 
-    public List<V_ProductHistory> getProductQuantities(String productCode) {
-        List<V_ProductHistory> result = v_ProductHistoryRepository.findByProductCode(productCode);
+    public List<V_ProductHistory> getProductQuantities(Integer productNumber) {
+        List<V_ProductHistory> result = v_ProductHistoryRepository.findByProductNum(productNumber);
         return result;
     }
 
-    public Map<Integer, V_ProductHistory> getProductQuantitiesMap(String productCode) {
-        List<V_ProductHistory> list = v_ProductHistoryRepository.findByProductCode(productCode);
+    public Map<Integer, V_ProductHistory> getProductQuantitiesMap(Integer productNumber) {
+        List<V_ProductHistory> list = v_ProductHistoryRepository.findByProductNum(productNumber);
         Map<Integer, V_ProductHistory> result = new HashMap();
         for (V_ProductHistory ps : list) {
             result.put(ps.getSize(), ps);
@@ -70,16 +70,17 @@ public class ProductService {
         return result;
     }
 
+    @Transactional
     public ProductHistory saveProductQuantityHistory(ProductHistory quantityHistory) {
         return productHistoryRepository.save(quantityHistory);
     }
 
-    public Product findByProductCodeAndProductNum(String productCode, String productNumber) {
-        return productRepository.findByProductCodeAndProductNum(productCode, Integer.parseInt(productNumber));
+    public Product findByProductCodeAndProductNum(String productCode, Integer productNumber) {
+        return productRepository.findByProductCodeAndProductNum(productCode, productNumber);
     }
 
-    public List<Product> findByProductNum(String productNum) {
-        return productRepository.findByProductNum(Integer.parseInt(productNum));
+    public Product findByProductNum(Integer productNum) {
+        return productRepository.findByProductNum(productNum);
     }
 
     public List<ProductHistory> getSalesHistoryByDate(Date from, Date to) {
@@ -90,6 +91,7 @@ public class ProductService {
         return productHistoryRepository.findOne(id);
     }
 
+    @Transactional
     public void updateProductHistory(ProductHistory sale) {
         productHistoryRepository.save(sale);
     }
