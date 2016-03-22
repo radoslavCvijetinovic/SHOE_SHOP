@@ -44,12 +44,6 @@ public class AppConfig {
     }
 
     @Bean
-    @Scope("prototype")
-    JasperReportBuilder getReportBuilder() {
-        return DynamicReports.report();
-    }
-
-    @Bean
     ReportingController getReportingUtils() {
         return new ReportingController();
     }
