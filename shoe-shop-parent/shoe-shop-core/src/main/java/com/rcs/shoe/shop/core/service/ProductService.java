@@ -82,6 +82,10 @@ public class ProductService {
     public Product findByProductNum(Integer productNum) {
         return productRepository.findByProductNum(productNum);
     }
+    
+    public V_Products findProductDetailsByProductNum(Integer productNum) {
+        return v_ProductsRepository.findByProductNum(productNum);
+    }
 
     public List<ProductHistory> getSalesHistoryByDate(Date from, Date to) {
         return productHistoryRepository.findByCreationTimeBetweenAndTypeOrderByCreationTimeDesc(from, to, 3);
@@ -94,6 +98,11 @@ public class ProductService {
     @Transactional
     public void updateProductHistory(ProductHistory sale) {
         productHistoryRepository.save(sale);
+    }
+
+    @Transactional
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
     }
 
 }

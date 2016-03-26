@@ -31,6 +31,8 @@ public class MainController extends Controller implements Initializable {
     private StackPane mainStackPane;
     @FXML
     private MenuItem newProductMenuItem;
+    @FXML
+    private MenuItem deleteProductMenuItem;
 
     @Autowired
     private UserService userService;
@@ -45,6 +47,7 @@ public class MainController extends Controller implements Initializable {
         loggedinUserValue.setText(authentication.getName());
         
         newProductMenuItem.visibleProperty().setValue(SecurityUtils.isAdmin());
+        deleteProductMenuItem.visibleProperty().setValue(SecurityUtils.isAdmin());
     }
 
     public void logOut() {
@@ -63,6 +66,10 @@ public class MainController extends Controller implements Initializable {
 
     public void newProduct() {
         uIConfig.loadNewProduct();
+    }
+    
+    public void deleteProduct() {
+        uIConfig.loadDeleteProduct();
     }
     
     public void newSale(){

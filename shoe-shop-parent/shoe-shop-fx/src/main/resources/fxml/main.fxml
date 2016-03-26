@@ -20,6 +20,7 @@
             <items>
               <MenuItem fx:id="newProductMenuItem" mnemonicParsing="false" onAction="#newProduct" text="%menu.products.add" />
               <MenuItem mnemonicParsing="false" onAction="#listProducts" text="%menu.products.list" />
+              <MenuItem fx:id="deleteProductMenuItem" mnemonicParsing="false" onAction="#deleteProduct" text="Brisanje proizvoda" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%menu.sales">

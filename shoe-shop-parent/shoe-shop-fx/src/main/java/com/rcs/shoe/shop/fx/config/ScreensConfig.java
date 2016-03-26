@@ -6,6 +6,7 @@ import com.rcs.shoe.shop.fx.controller.ui.LoginController;
 import com.rcs.shoe.shop.fx.controller.ui.MainController;
 import com.rcs.shoe.shop.fx.controller.ui.NewProductController;
 import com.rcs.shoe.shop.fx.controller.ui.NotImplementedController;
+import com.rcs.shoe.shop.fx.controller.ui.ProductDeletController;
 import com.rcs.shoe.shop.fx.controller.ui.ProductsController;
 import com.rcs.shoe.shop.fx.controller.ui.SaleCancelController;
 import com.rcs.shoe.shop.fx.controller.ui.SaleEnterController;
@@ -135,6 +136,10 @@ public class ScreensConfig implements Observer {
         controller.setFromSale(fromSale);
         setNodeToMain(getNode(controller, getClass().getResource(Constants.NEW_PRODUCT_FXML)));
     }
+    
+    public void loadDeleteProduct() {
+        setNodeToMain(getNode(newProductDeletController(), getClass().getResource(Constants.PRODUCT_DELETE_FXML)));
+    }
 
     public void loadNotImplemented() {
         setNodeToMain(getNode(notImplementedController(), getClass().getResource(Constants.NOT_IMPL_FXML)));
@@ -206,6 +211,12 @@ public class ScreensConfig implements Observer {
     @Scope("prototype")
     NewProductController newProductController() {
         return new NewProductController(this);
+    }
+    
+    @Bean
+    @Scope("prototype")
+    ProductDeletController newProductDeletController() {
+        return new ProductDeletController(this);
     }
 
     @Bean

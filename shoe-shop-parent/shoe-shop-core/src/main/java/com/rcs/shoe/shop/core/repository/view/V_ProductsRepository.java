@@ -16,4 +16,6 @@ public interface V_ProductsRepository extends CrudRepository<V_Products, Long> {
 
     public V_Products findByProductCode(String productCode);
 
+    public V_Products findByProductNum(Integer productNum);
+
 }
