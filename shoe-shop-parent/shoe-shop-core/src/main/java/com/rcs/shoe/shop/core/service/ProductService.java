@@ -8,6 +8,8 @@ import com.rcs.shoe.shop.core.repository.ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.ProductRepository;
 import com.rcs.shoe.shop.core.repository.view.V_ProductHistoryRepository;
 import com.rcs.shoe.shop.core.repository.view.V_ProductsRepository;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +84,7 @@ public class ProductService {
     public Product findByProductNum(Integer productNum) {
         return productRepository.findByProductNum(productNum);
     }
-    
+
     public V_Products findProductDetailsByProductNum(Integer productNum) {
         return v_ProductsRepository.findByProductNum(productNum);
     }
@@ -103,6 +105,54 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Long id) {
         productRepository.delete(id);
+    }
+
+    @Transactional
+    public void optimizeProductHistory() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.YEAR, -1); // minus year
+        c.add(Calendar.MONTH, -6); // minus 6 months
+        Date past = c.getTime();
+
+        Map<String, ProductHistory> totals = new HashMap<String, ProductHistory>();
+        List<ProductHistory> list = productHistoryRepository.findTop100ByModificationTimeLessThanAndTypeNot(past, 5);
+        for (ProductHistory ph : list) {
+            String key = getKey(ph);
+            ProductHistory total = totals.get(key);
+
+            if (total == null) {
+                total = productHistoryRepository.findByProductNumAndProductCodeAndSizeAndType(
+                        ph.getProductNum(), ph.getProductCode(), ph.getSize(), 5);
+            }
+
+            if (total == null) {
+                total = new ProductHistory();
+                total.setProductCode(ph.getProductCode());
+                total.setProductNum(ph.getProductNum());
+                total.setCreatedBy("rajkofon2");
+                total.setSize(ph.getSize());
+                total.setType(5);
+                total.setQuantity(ph.getQuantity());
+            } else {
+                total.setQuantity(total.getQuantity() + ph.getQuantity());
+            }
+            totals.put(getKey(ph), total);
+
+            productHistoryRepository.delete(ph);
+        }
+
+        if (!totals.isEmpty()) {
+            productHistoryRepository.save(totals.values());
+        }
+
+        List<ProductHistory> zeros = productHistoryRepository.findByTypeAndQuantity(5, 0);
+        if (!zeros.isEmpty()) {
+            productHistoryRepository.delete(zeros);
+        }
+    }
+
+    private String getKey(ProductHistory ph) {
+        return ph.getProductNum() + "_" + ph.getProductCode() + "_" + ph.getSize();
     }
 
 }

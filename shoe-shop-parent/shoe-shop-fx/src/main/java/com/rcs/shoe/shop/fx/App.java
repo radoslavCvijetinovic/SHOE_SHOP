@@ -5,6 +5,7 @@
  */
 package com.rcs.shoe.shop.fx;
 
+import com.rcs.shoe.shop.core.service.ProductService;
 import com.rcs.shoe.shop.fx.config.AppConfig;
 import com.rcs.shoe.shop.fx.config.ScreensConfig;
 import com.rcs.shoe.shop.fx.model.LanguageModel;
@@ -25,6 +26,7 @@ public class App extends Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private ScreensConfig uiConfig;
     private LanguageModel lang;
+    private ProductService productService;
 
     @Override
     public void init() throws Exception {
@@ -37,6 +39,9 @@ public class App extends Application {
 
         uiConfig = context.getBean(ScreensConfig.class);
         lang = context.getBean(LanguageModel.class);
+        productService = context.getBean(ProductService.class);
+        
+        dataOptimization();
     }
 
     @Override
@@ -50,6 +55,10 @@ public class App extends Application {
 
         notifyPreloader(
                 new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
+    }
+
+    private void dataOptimization() {
+        productService.optimizeProductHistory();
     }
 
 }

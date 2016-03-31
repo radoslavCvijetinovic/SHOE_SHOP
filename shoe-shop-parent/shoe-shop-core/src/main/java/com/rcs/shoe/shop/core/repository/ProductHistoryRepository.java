@@ -20,4 +20,10 @@ public interface ProductHistoryRepository extends CrudRepository<ProductHistory,
     
     List<ProductHistory> findByCreationTimeBetweenAndTypeOrderByCreationTimeDesc(
             Date from, Date to, Integer type);
+
+    public List<ProductHistory> findTop100ByModificationTimeLessThanAndTypeNot(Date past, Integer type);
+
+    public ProductHistory findByProductNumAndProductCodeAndSizeAndType(Integer productNum, String productCode, Integer size, int i);
+
+    public List<ProductHistory> findByTypeAndQuantity(Integer type , Integer quantity);
 }
